@@ -9,7 +9,7 @@
     "prestart": "hexo clean && hexo g && hexo server",
     "start": "open http://localhost:4000",
     "pred": "git add --all . && git commit -m 'update blog' && git push --quiet --force",
-    "d": "cd ./travis && git init && git add --all . && git commit -m 'update blog' && git push --quiet --force https://github.com/strawferry/FerryVipBlog.git source",
+    "d": "cd ./travis && git init && git add --all . && git commit -m 'update blog' && git push --quiet --force https://c334e914afd67ff7197e3dd6ebffa33395cc5efa@github.com/strawferry/FerryVipBlog.git source",
     "postd": "echo push ok remove .git && pwd"
   },
   "dependencies": {
