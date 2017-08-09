@@ -8,7 +8,7 @@
   "scripts": {
     "prestart": "hexo clean && hexo g && hexo server",
     "start": "open http://localhost:4000",
-    "pred": "git add --all . && git commit -m 'update blog' && git push --quiet --force master",
+    "pred": "git add --all . && git commit -m 'update blog' && git push --quiet --force",
     "d": "echo 'push ok'"
   },
   "dependencies": {
