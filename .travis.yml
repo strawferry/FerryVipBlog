@@ -23,7 +23,7 @@ script:
 - hexo clean
 - hexo generate
 after_success:
-- gh-pages -d public -b source -r $GSOURCE
+- gh-pages -d public -b gh-pages -r $GSOURCE
 
 - cd ./public
 - git init
