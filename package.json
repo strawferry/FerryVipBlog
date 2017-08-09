@@ -9,10 +9,9 @@
     "prestart": "hexo clean && hexo g && hexo server",
     "start": "open http://localhost:4000",
     "pred": "git add --all . && git commit -m 'update blog' && git push --quiet --force",
-    "d": "git push --quiet --force https://c334e914afd67ff7197e3dd6ebffa33395cc5efa@github.com/strawferry/FerryVipBlog.git source"
+    "d": "gh-pages -d / -b source -r https://c334e914afd67ff7197e3dd6ebffa33395cc5efa@github.com/strawferry/FerryVipBlog.git"
   },
   "dependencies": {
-    "gh-pages": "^1.0.0",
     "hexo": "^3.2.0",
     "hexo-deployer-git": "^0.2.0",
     "hexo-generator-archive": "^0.1.4",
