@@ -5,6 +5,12 @@
   "hexo": {
     "version": "3.3.8"
   },
+  "scripts": {
+    "prestart": "hexo clean && hexo g && hexo server",
+    "start": "open http://localhost:4000",
+    "pred": "git add --all . && git commit -m 'update blog' && git push --quiet --force master",
+    "d": "echo 'push ok'"
+  },
   "dependencies": {
     "gh-pages": "^1.0.0",
     "hexo": "^3.2.0",
