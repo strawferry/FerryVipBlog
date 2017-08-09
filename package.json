@@ -9,8 +9,8 @@
     "prestart": "hexo clean && hexo g && hexo server",
     "start": "open http://localhost:4000",
     "pred": "git add --all . && git commit -m 'update blog' && git push --quiet --force origin",
-    "d": "git remote add grepo https://05d3e9ce28d1c1020dead50ba237eb28b99f14da@github.com/strawferry/FerryVipBlog.git && git push --quiet --force grepo",
-    "postd": "git remote remove grepo"
+    "d": "git remote add grepo https://05d3e9ce28d1c1020dead50ba237eb28b99f14da@github.com/strawferry/FerryVipBlog.git",
+    "postd": "git push --quiet --force grepo && git remote remove grepo"
   },
   "dependencies": {
     "hexo": "^3.2.0",
