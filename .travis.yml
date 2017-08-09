@@ -23,15 +23,15 @@ script:
 - hexo clean
 - hexo generate
 after_success:
-- gh-pages -d public -b gh-pages -r $GSOURCE
+- gh-pages -d public -b master -r $GSOURCE
 
 - cd ./public
 - git init
 - git add --all .
 - git commit -m "Travis CI Auto Builder"
 
-- git push --quiet --force $GITHUB master
+- git push --quiet --force $GITHUB gh-pages
 
 # 这里的 REPO_TOKEN 即之前在 travis 项目的环境变量里添加的
 
-- git push --quiet --force $CODING master
+- git push --quiet --force $CODING coding-pages
