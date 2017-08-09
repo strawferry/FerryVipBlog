@@ -6,4 +6,4 @@ s3="strawferry/FerryVipBlog.git"
 
 repo=${s1}${s2}${s3}
 
-git remote add grepo ${repo} -m source
+git remote add grepo ${repo}
