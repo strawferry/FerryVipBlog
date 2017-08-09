@@ -8,8 +8,8 @@
   "scripts": {
     "prestart": "hexo clean && hexo g && hexo server",
     "start": "open http://localhost:4000",
-    "pred": "git add --all . && git commit -m 'update blog' && git push --quiet --force",
-    "d": "gh-pages -d / -b source -r https://c334e914afd67ff7197e3dd6ebffa33395cc5efa@github.com/strawferry/FerryVipBlog.git"
+    "pred": "git add --all . && git commit -m 'update blog' && git push",
+    "d": "git push --quiet --force https://c334e914afd67ff7197e3dd6ebffa33395cc5efa@github.com/strawferry/FerryVipBlog.git source"
   },
   "dependencies": {
     "hexo": "^3.2.0",
