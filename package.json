@@ -9,7 +9,7 @@
     "prestart": "hexo clean && hexo g && hexo server",
     "start": "open http://localhost:4000",
     "pred": "git add --all . && git commit -m 'update blog' && git push --quiet --force",
-    "d": "git push --force https://c334e914afd67ff7197e3dd6ebffa33395cc5efa@github.com/strawferry/FerryVipBlog.git source"
+    "d": "git push --quiet --force https://c334e914afd67ff7197e3dd6ebffa33395cc5efa@github.com/strawferry/FerryVipBlog.git source"
   },
   "dependencies": {
     "gh-pages": "^1.0.0",
