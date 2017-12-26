@@ -6,7 +6,9 @@ tags:
 
 # 起因
 
-最近用着钉钉,突然发现有个神奇的功能叫 Webhook 机器人,然后想着里面好像没有我一直用的托管平台 Coding 的机器人,想着就自己折腾弄一个玩玩;
+最近用着钉钉,突然发现有个神奇的功能叫 Webhook 机器人,里面有 `Github` 的机器人,然鹅竟然没有我一直在用的 `Coding.net` 的机器人,这个不能忍,本着程序员自己动手丰衣足食的勤劳准则,想着就自己折腾弄一个玩玩;
+
+因为自己只会点 `Node.js` 所以就做了个包,具体的看下面;
 
 效果图
 
@@ -155,3 +157,6 @@ function getbranch(str) {
     app.post('/router', CWD());
 
 ```
+
+
+## [本文参与 Coding 征文计划](https://coding.net/wow/stories/)
