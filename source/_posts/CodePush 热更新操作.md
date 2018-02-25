@@ -5,11 +5,11 @@ tags:
 ---
 
 因为[微软开源](https://microsoft.github.io/code-push/docs/cli.html)的这个做的还不错,所以拿来用了
-###1.   CodePush CLI安装
+### 1.   CodePush CLI安装
 * 首先要安装[Node.js](https://nodejs.org/en/)
 * CodePush CLI安装 : `npm install -g code-push-cli`
 
-###2. Account 账号管理
+### 2. Account 账号管理
 * 注册`code-push register`
 ![codePush注册页面](http://img.blog.csdn.net/20160804224117391)
 一般可以使用github登录(建议),也可以注册微软的账号!
@@ -32,7 +32,7 @@ tags:
 * 设置key到期时间  `code-push access-key patch <accessKeyName> --name "new name" --ttl 10d`
 *  登录`HTTPS_PROXY or HTTP_PROXY`安全的一些东西`code-push login --noProxy` `code-push login --proxy https://foo.com:3454`
 
-###3. App 管理
+### 3. App 管理
 * 新建推送热更新的App `code-push app add <appName>`
 > 建议是iOS和安卓版本分开创建
 > `code-push app add MyApp-Android`
@@ -45,7 +45,7 @@ tags:
 * 移除参与的管理者 `code-push collaborator rm <appName> <collaboratorEmail>`
 * 列出所有的参与者 `code-push collaborator ls <appName>`
 * 把自己的这个App管理权限转移给其他人 `code-push app transfer <appName> <newOwnerEmail>`
-###4. 开发环境管理
+### 4. 开发环境管理
 * 增加开发环境 `code-push deployment add <appName> <deploymentName>`
 * 移除 `code-push deployment rm <appName> <deploymentName>`
 * 换名字 `code-push deployment rename <appName> <deploymentName> <newDeploymentName>`
@@ -58,7 +58,7 @@ tags:
 > Rollbacks 回滚的数
 > Rollout
 > Disabled
-###5. [更新版本管理](https://microsoft.github.io/code-push/docs/cli.html#releasing-updates-react-native)
+### 5. [更新版本管理](https://microsoft.github.io/code-push/docs/cli.html#releasing-updates-react-native)
 * 最简单的方法 `code-push release-react MyApp ios` `code-push release-react MyApp android`
 * code-push release-react hxlivei ios -d "PrePush" --des "停车场"
 >code-push release-react <appName> <platform>
@@ -75,6 +75,6 @@ tags:
 [--targetBinaryVersion <targetBinaryVersion>]
 [--rollout <rolloutPercentage>]
 
-###6. 其他
+### 6. 其他
 * 清除更新记录 `code-push deployment clear <appName> <deploymentName>`
 ![清除历史](http://img.blog.csdn.net/20160804232838412)
