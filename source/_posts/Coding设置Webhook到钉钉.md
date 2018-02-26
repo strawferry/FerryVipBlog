@@ -17,9 +17,9 @@ tags:
 ## 准备工作
 
 找了一下两家的文档
->[Coding Webhook 文档](https://open.coding.net/webhooks/)
+> [Coding Webhook 文档](https://open.coding.net/webhooks/)
 
->[钉钉自定义机器人文档](https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.V8Wb2O&treeId=257&articleId=105735&docType=1)
+> [钉钉自定义机器人文档](https://open-doc.dingtalk.com/docs/doc.htm?spm=a219a.7629140.0.0.V8Wb2O&treeId=257&articleId=105735&docType=1)
 
 大概原理就是,钉钉提供一个发送消息的 Webhook 地址给你,然后 Coding 家提供了一个给你填入 Webhook 的地址接口,当仓库有信息变化,就会给你这个地址接口发消息;然而钉钉没有做这个 Coding 的接口,所以不能提供 Coding 直接把消息发到钉钉上,所以只能自己搭个服务器,先把 Coding 的消息解析一下,在发给钉钉.基本原理就是这样,说的有点乱,哈哈;
 
