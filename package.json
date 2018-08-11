@@ -6,7 +6,7 @@
     "version": "3.7.1"
   },
   "scripts": {
-    "start": "hexo clean && hexo g && open http://localhost:4000 && hexo server",
+    "start": "hexo clean && hexo g && open http://localhost:4000 && hexo server ",
     "pred": "git add --all . && git commit -m 'update blog' && git push",
     "d": "sh post.sh",
     "postd": "git push --quiet --force grepo && git remote remove grepo"
