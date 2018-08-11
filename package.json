@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "hexo": {
-    "version": "3.5.0"
+    "version": "3.7.1"
   },
   "scripts": {
     "start": "hexo clean && hexo g && open http://localhost:4000 && hexo server",
@@ -22,6 +22,7 @@
     "hexo-renderer-ejs": "^0.3.0",
     "hexo-renderer-marked": "^0.3.0",
     "hexo-renderer-stylus": "^0.3.1",
-    "hexo-server": "^0.2.0"
+    "hexo-server": "^0.2.0",
+    "hexo-symbols-count-time": "^0.4.4"
   }
 }

@@ -7,7 +7,7 @@ title: FerryVip's Blog
 subtitle:
 description: 好好过一生
 author: FerryVip
-language: zh-Hans
+language: zh-CN
 timezone:
 
 
@@ -48,6 +48,13 @@ tag_map:
 ## http://momentjs.com/docs/#/displaying/format/
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
+
+symbols_count_time:
+  symbols: true
+  time: true
+  total_symbols: true
+  total_time: true
+
 
 # Pagination
 ## Set per_page to 0 to disable pagination
