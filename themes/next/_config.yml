@@ -309,7 +309,7 @@ codeblock:
 # Wechat Subscriber
 wechat_subscriber:
   enabled: true
-  qcode: https://ws2.sinaimg.cn/large/8bbf0afbjw1fb6cpfkt30j20vo14w0xh.jpg
+  qcode: https://ws1.sinaimg.cn/large/8bbf0afbly1fy4082vru9j20kw0r2jt7.jpg
   # /path/to/your/wechatqcode ex. /uploads/wechat-qcode.jpg
   description: 扫描二维码和我唠嗑吧!
 
