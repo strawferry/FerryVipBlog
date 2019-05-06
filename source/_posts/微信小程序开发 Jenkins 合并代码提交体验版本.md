@@ -16,6 +16,7 @@ tags:
 3. 通过微信的工具上传微信小程序最新代码,并通过钉钉机器人通知打包成功;
 4. 测试就可以打开微信小程序的体验版开始体验最新的修改;
 
+<img referrerPolicy="no-referrer" src="https://ws1.sinaimg.cn/large/8bbf0afbly1g0ge56olm3j217m0loacj.jpg" />
 ![](https://ws1.sinaimg.cn/large/8bbf0afbly1g0ge56olm3j217m0loacj.jpg)
 
 ## 3. Jenkins 配置
