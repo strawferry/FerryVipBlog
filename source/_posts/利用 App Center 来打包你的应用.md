@@ -1,3 +1,8 @@
+---
+title: 利用 App Center 来打包你的应用
+date: 2019-05-07 16:26:34
+tags:
+---
 # 利用 App Center 来打包你的应用
 App Center 是巨硬(微软)家的一个应用开发管理平台服务,之前主要使用的是他的 CodePush 服务,后续平台升级了,把开发的崩溃收集,数据统计,推送服务,应用构建及测试,CodePush 等多个服务融合在一起,做出的 App Center 平台,基本功能也都是免费的,今天这篇文章主要是讲 iOS (原生和 ReactNative)应用通过 App Center 来打包;
 
