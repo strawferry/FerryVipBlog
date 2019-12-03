@@ -99,3 +99,4 @@ url: http://ferryvip.coding.me
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
+
