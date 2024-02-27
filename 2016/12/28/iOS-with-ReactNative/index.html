@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"strawferry.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"show_result":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="如何在现有的iOS项目中添加ReactNative混合开发如果公司的项目之前是用原生, 现在想做混合开发并且选择ReactNative, 这篇会是一个基础的环境配置; 1. 开发环境准备首先, 至少你已经搭建了 React Native 的开发环境在iOS平台上所需的一切依赖软件（比如npm）。 其次, CocoaPods 包管理工具, 基本做iOS开发都有装, 如果没有, 那就百度一下😂; 2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS-with-ReactNative">
+<meta property="og:url" content="https://strawferry.github.io/2016/12/28/iOS-with-ReactNative/index.html">
+<meta property="og:site_name" content="FerryVip&#39;s Blog">
+<meta property="og:description" content="如何在现有的iOS项目中添加ReactNative混合开发如果公司的项目之前是用原生, 现在想做混合开发并且选择ReactNative, 这篇会是一个基础的环境配置; 1. 开发环境准备首先, 至少你已经搭建了 React Native 的开发环境在iOS平台上所需的一切依赖软件（比如npm）。 其次, CocoaPods 包管理工具, 基本做iOS开发都有装, 如果没有, 那就百度一下😂; 2">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ws2.sinaimg.cn/large/8bbf0afbjw1fb4ay3fky6j20hk0c70vj.jpg">
+<meta property="og:image" content="https://ws3.sinaimg.cn/large/8bbf0afbjw1fb4aykwmpyg20970gjgok.gif">
+<meta property="article:published_time" content="2016-12-28T06:08:04.000Z">
+<meta property="article:modified_time" content="2024-02-27T01:54:45.881Z">
+<meta property="article:author" content="FerryVip">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ws2.sinaimg.cn/large/8bbf0afbjw1fb4ay3fky6j20hk0c70vj.jpg">
+
+
+<link rel="canonical" href="https://strawferry.github.io/2016/12/28/iOS-with-ReactNative/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://strawferry.github.io/2016/12/28/iOS-with-ReactNative/","path":"2016/12/28/iOS-with-ReactNative/","title":"iOS-with-ReactNative"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>iOS-with-ReactNative | FerryVip's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88853535-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-88853535-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kt6ijw4ygg");
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FerryVip's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">36</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%9C%A8%E7%8E%B0%E6%9C%89%E7%9A%84iOS%E9%A1%B9%E7%9B%AE%E4%B8%AD%E6%B7%BB%E5%8A%A0ReactNative%E6%B7%B7%E5%90%88%E5%BC%80%E5%8F%91"><span class="nav-number">1.</span> <span class="nav-text">如何在现有的iOS项目中添加ReactNative混合开发</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">1. 开发环境准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96%E5%8C%85"><span class="nav-number">1.2.</span> <span class="nav-text">2. 安装依赖包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-React-Native%E6%A1%86%E6%9E%B6%E5%B5%8C%E5%85%A5iOS"><span class="nav-number">1.3.</span> <span class="nav-text">3. React Native框架嵌入iOS</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Subspecs"><span class="nav-number">1.3.1.</span> <span class="nav-text">Subspecs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Podfile"><span class="nav-number">1.3.2.</span> <span class="nav-text">Podfile</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pod%E5%AE%89%E8%A3%85"><span class="nav-number">1.3.3.</span> <span class="nav-text">Pod安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90"><span class="nav-number">1.4.</span> <span class="nav-text">4. 代码集成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%9F%E7%94%9F%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90"><span class="nav-number">1.4.1.</span> <span class="nav-text">原生代码集成</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ReactNative%E4%BB%A3%E7%A0%81%E9%9B%86%E6%88%90"><span class="nav-number">1.4.2.</span> <span class="nav-text">ReactNative代码集成</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FerryVip"
+      src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+  <p class="site-author-name" itemprop="name">FerryVip</p>
+  <div class="site-description" itemprop="description">好好过一生</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0cmF3ZmVycnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;strawferry"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cDovL3dlaWJvLmNvbS91LzIzNDQ1NTMyMTE=" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2344553211"><i class="fab fa-weibo fa-fw"></i>Weibo</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://strawferry.github.io/2016/12/28/iOS-with-ReactNative/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+      <meta itemprop="name" content="FerryVip">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FerryVip's Blog">
+      <meta itemprop="description" content="好好过一生">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="iOS-with-ReactNative | FerryVip's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS-with-ReactNative
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-12-28 14:08:04" itemprop="dateCreated datePublished" datetime="2016-12-28T14:08:04+08:00">2016-12-28</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-02-27 09:54:45" itemprop="dateModified" datetime="2024-02-27T09:54:45+08:00">2024-02-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="如何在现有的iOS项目中添加ReactNative混合开发"><a href="#如何在现有的iOS项目中添加ReactNative混合开发" class="headerlink" title="如何在现有的iOS项目中添加ReactNative混合开发"></a>如何在现有的iOS项目中添加ReactNative混合开发</h1><p>如果公司的项目之前是用原生, 现在想做混合开发并且选择ReactNative, 这篇会是一个基础的环境配置;</p>
+<h2 id="1-开发环境准备"><a href="#1-开发环境准备" class="headerlink" title="1. 开发环境准备"></a>1. 开发环境准备</h2><p>首先, 至少你已经搭建了 <code>React Native</code> 的<span class="exturl" data-url="aHR0cDovL3JlYWN0bmF0aXZlLmNuL2RvY3MvMC4zOS9nZXR0aW5nLXN0YXJ0ZWQuaHRtbA==">开发环境<i class="fa fa-external-link-alt"></i></span>在iOS平台上所需的一切依赖软件（比如npm）。</p>
+<p>其次, <span class="exturl" data-url="aHR0cDovL2NvY29hcG9kcy5vcmcv">CocoaPods<i class="fa fa-external-link-alt"></i></span> 包管理工具, 基本做iOS开发都有装, 如果没有, 那就百度一下😂;</p>
+<h2 id="2-安装依赖包"><a href="#2-安装依赖包" class="headerlink" title="2. 安装依赖包"></a>2. 安装依赖包</h2><p>React Native的植入过程同时需要React和React Native两个node依赖包。<br><img data-src="https://ws2.sinaimg.cn/large/8bbf0afbjw1fb4ay3fky6j20hk0c70vj.jpg"><br>在你的原有的iOS目录的上一级目录创建一个包管理package.json文件;</p>
+<blockquote>
+<p>对于一个典型的React Native项目来说，一般package.json和index.ios.js等文件会放在项目的根目录下。而iOS相关的原生代码会放在一个名为ios&#x2F;的子目录中,这里也同时放着你的Xcode项目文件（.xcodeproj）。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// package.json 文件内容</span><br><span class="line">&#123;</span><br><span class="line">  &quot;name&quot;: &quot;NumberTileGame&quot;,</span><br><span class="line">  &quot;version&quot;: &quot;0.0.1&quot;,</span><br><span class="line">  &quot;private&quot;: true,</span><br><span class="line">  &quot;scripts&quot;: &#123;</span><br><span class="line">    &quot;start&quot;: &quot;node node_modules/react-native/local-cli/cli.js start&quot;</span><br><span class="line">  &#125;,</span><br><span class="line">  &quot;dependencies&quot;: &#123;</span><br><span class="line">    &quot;react&quot;: &quot;15.4.1&quot;,</span><br><span class="line">    &quot;react-native&quot;: &quot;0.39.2&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 通过npm info react和npm info react-native 来查看当前的最新版本</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>npm install   &#x2F;&#x2F; 在 package.json 的当前目录下开启终端执行这段代码, 这些模块就会安装到 <code>node_modules/</code> 下;</p>
+</blockquote>
+<h2 id="3-React-Native框架嵌入iOS"><a href="#3-React-Native框架嵌入iOS" class="headerlink" title="3. React Native框架嵌入iOS"></a>3. React Native框架嵌入iOS</h2><h3 id="Subspecs"><a href="#Subspecs" class="headerlink" title="Subspecs"></a>Subspecs</h3><p>在你开始把React Native植入到你的应用中之前，首先要决定具体整合的是React Native框架中的哪些部分。而这就是subspec要做的工作。在创建Podfile文件的时候，需要指定具体安装哪些React Native的依赖库。所指定的每一个库就称为一个subspec。</p>
+<p>可用的subspec都列在<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL2ZhY2Vib29rL3JlYWN0LW5hdGl2ZS9ibG9iL21hc3Rlci9SZWFjdC5wb2RzcGVj">node_modules&#x2F;react-native&#x2F;React.podspec<i class="fa fa-external-link-alt"></i></span>中，基本都是按其功能命名的。一般来说你首先需要添加Core，这一subspec包含了必须的AppRegistry、StyleSheet、View以及其他的一些React Native核心库。如果你想使用React Native的Text库（即<Text>组件），那就需要添加RCTText的subspec。同理，Image需要加入RCTImage，等等。</p>
+<h3 id="Podfile"><a href="#Podfile" class="headerlink" title="Podfile"></a>Podfile</h3><p>在 CocoaPods 的 Podfile 中指定我们所需要使用的组件。如果原生没有用过 CocoaPods 管理;</p>
+<blockquote>
+<p>&#x2F;&#x2F;在iOS原生代码所在的目录中（也就是<code>.xcodeproj</code>文件所在的目录）执行：<br> <code>pod init</code></p>
+</blockquote>
+<p>Podfile 会创建在执行命令的目录中。你需要调整其内容以满足你的植入需求。调整后的Podfile的内容看起来类似下面这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># target的名字一般与你的项目名字相同</span><br><span class="line">target &#x27;NumberTileGame&#x27; do</span><br><span class="line"></span><br><span class="line">  # &#x27;node_modules&#x27;目录一般位于根目录中</span><br><span class="line">  # 但是如果你的结构不同，那你就要根据实际路径修改下面的`:path`</span><br><span class="line">  pod &#x27;React&#x27;, :path =&gt; &#x27;../node_modules/react-native&#x27;, :subspecs =&gt; [</span><br><span class="line">    &#x27;Core&#x27;,</span><br><span class="line">    &#x27;RCTText&#x27;,</span><br><span class="line">    &#x27;RCTNetwork&#x27;,</span><br><span class="line">    &#x27;RCTWebSocket&#x27;, # 这个模块是用于调试功能的</span><br><span class="line">    # 在这里继续添加你所需要的模块</span><br><span class="line">  ]</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<h3 id="Pod安装"><a href="#Pod安装" class="headerlink" title="Pod安装"></a>Pod安装</h3><p>创建好了Podfile后，就可以开始安装React Native的pod包了。</p>
+<blockquote>
+<p><code>pod install</code></p>
+</blockquote>
+<h2 id="4-代码集成"><a href="#4-代码集成" class="headerlink" title="4. 代码集成"></a>4. 代码集成</h2><h3 id="原生代码集成"><a href="#原生代码集成" class="headerlink" title="原生代码集成"></a>原生代码集成</h3><p>在要混合开发的页面, 加入如下代码</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// RNViewController 页面</span></span><br><span class="line">- (<span class="type">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="variable language_">super</span> viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">NSURL</span> *jsCodeLocation = [<span class="built_in">NSURL</span> URLWithString:<span class="string">@&quot;http://localhost:8081/index.ios.bundle?platform=ios&quot;</span>];</span><br><span class="line">    RCTRootView *rootView = [[RCTRootView alloc] initWithBundleURL : jsCodeLocation</span><br><span class="line">                         moduleName        : <span class="string">@&quot;HybridApp&quot;</span></span><br><span class="line">                         initialProperties : @&#123;<span class="string">@&quot;page&quot;</span> : <span class="string">@&quot;RN1&quot;</span>&#125;  <span class="comment">// 传入参数,用于定义那个页面或者一些数据传输</span></span><br><span class="line">                          launchOptions    : <span class="literal">nil</span>];</span><br><span class="line">    <span class="keyword">self</span>.view = rootView;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="ReactNative代码集成"><a href="#ReactNative代码集成" class="headerlink" title="ReactNative代码集成"></a>ReactNative代码集成</h3><p><code>index.ios.js</code> js 代码的入口</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;<span class="title class_">AppRegistry</span>&#125; <span class="keyword">from</span> <span class="string">&#x27;react-native&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">App</span> <span class="keyword">from</span> <span class="string">&#x27;./app&#x27;</span>;</span><br><span class="line"><span class="title class_">AppRegistry</span>.<span class="title function_">registerComponent</span>(<span class="string">&#x27;HybridApp&#x27;</span>, <span class="function">() =&gt;</span> <span class="title class_">App</span>);</span><br><span class="line"><span class="comment">// 注册模块</span></span><br></pre></td></tr></table></figure>
+<p><code>app.js</code> 在这边做页面判断,当然你也可以根据自己的需求去做调整</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">RN1</span> <span class="keyword">from</span> <span class="string">&#x27;./ReactNative1&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">RN2</span> <span class="keyword">from</span> <span class="string">&#x27;./ReactNative2&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">App</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">    <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="variable language_">this</span>.<span class="property">props</span>[<span class="string">&#x27;page&#x27;</span>] == <span class="string">&#x27;RN1&#x27;</span> ? <span class="language-xml"><span class="tag">&lt;<span class="name">RN1</span> /&gt;</span></span>:<span class="language-xml"><span class="tag">&lt;<span class="name">RN2</span> /&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>ReactNative1.js</code> 页面1</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    <span class="title class_">StyleSheet</span>,</span><br><span class="line">    <span class="title class_">Text</span>,</span><br><span class="line">    <span class="title class_">View</span></span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;react-native&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">ReactNative1</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">    <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.container&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;styles.highScoresTitle&#125;</span>&gt;</span>ReactNative1<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;&#123;height:</span> <span class="attr">100</span>, <span class="attr">width:</span> <span class="attr">100</span>, <span class="attr">backgroundColor:</span> &#x27;<span class="attr">blue</span>&#x27;&#125;&#125; /&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">View</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> styles = <span class="title class_">StyleSheet</span>.<span class="title function_">create</span>(&#123;</span><br><span class="line">    <span class="attr">container</span>: &#123;</span><br><span class="line">        <span class="attr">flex</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">justifyContent</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">        <span class="attr">alignItems</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">        <span class="attr">backgroundColor</span>: <span class="string">&#x27;#FFFFFF&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">highScoresTitle</span>: &#123;</span><br><span class="line">        <span class="attr">fontSize</span>: <span class="number">20</span>,</span><br><span class="line">        <span class="attr">textAlign</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">        <span class="attr">margin</span>: <span class="number">10</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p><code>ReactNative2.js</code> 页面2</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&#x27;use strict&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span> <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">    <span class="title class_">StyleSheet</span>,</span><br><span class="line">    <span class="title class_">Text</span>,</span><br><span class="line">    <span class="title class_">View</span></span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;react-native&#x27;</span>;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="keyword">class</span> <span class="title class_">ReactNative1</span> <span class="keyword">extends</span> <span class="title class_ inherited__">React.Component</span> &#123;</span><br><span class="line">    <span class="title function_">render</span>(<span class="params"></span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            <span class="language-xml"><span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.container&#125;</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;styles.highScoresTitle&#125;</span>&gt;</span>ReactNative2<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">                <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;&#123;height:</span> <span class="attr">100</span>, <span class="attr">width:</span> <span class="attr">100</span>, <span class="attr">backgroundColor:</span> &#x27;<span class="attr">red</span>&#x27;&#125;&#125; /&gt;</span></span></span><br><span class="line"><span class="language-xml">            <span class="tag">&lt;/<span class="name">View</span>&gt;</span></span></span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> styles = <span class="title class_">StyleSheet</span>.<span class="title function_">create</span>(&#123;</span><br><span class="line">    <span class="attr">container</span>: &#123;</span><br><span class="line">        <span class="attr">flex</span>: <span class="number">1</span>,</span><br><span class="line">        <span class="attr">justifyContent</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">        <span class="attr">alignItems</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">        <span class="attr">backgroundColor</span>: <span class="string">&#x27;#FFFFFF&#x27;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="attr">highScoresTitle</span>: &#123;</span><br><span class="line">        <span class="attr">fontSize</span>: <span class="number">20</span>,</span><br><span class="line">        <span class="attr">textAlign</span>: <span class="string">&#x27;center&#x27;</span>,</span><br><span class="line">        <span class="attr">margin</span>: <span class="number">10</span>,</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0cmF3ZmVycnkvSHlicmlkQXBw">&gt;&gt;项目gayhub地址&lt;&lt;<i class="fa fa-external-link-alt"></i></span><br>效果展示</p>
+<p><img data-src="https://ws3.sinaimg.cn/large/8bbf0afbjw1fb4aykwmpyg20970gjgok.gif"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/07/20/CodePush%20%E7%83%AD%E6%9B%B4%E6%96%B0%E6%93%8D%E4%BD%9C/" rel="prev" title="CodePush 热更新操作">
+                  <i class="fa fa-angle-left"></i> CodePush 热更新操作
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/02/22/hybrid-app-codepush/" rel="next" title="混合app集成热更新">
+                  混合app集成热更新 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">FerryVip</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js","integrity":"sha256-9y71g5Lz/KLsHjB8uXwnkuWDtAMDSzD/HdIbqhJfTAI="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

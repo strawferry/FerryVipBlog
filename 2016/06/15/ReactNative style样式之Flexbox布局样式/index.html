@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"strawferry.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"show_result":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ReactNative style样式之Flexbox布局样式 Flexbox布局样式 ReactNative是参考文档大于0.29的版本 参考链接2 参考链接1 1. 6个属性设置在容器上1.1 任何一个容器都可以指定为Flex布局。ReactNative无 display: flex;   display: inline-flex; &#x2F;&#x2F;行内元素也可以使用Flex布局。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ReactNative style样式之Flexbox布局样式">
+<meta property="og:url" content="https://strawferry.github.io/2016/06/15/ReactNative%20style%E6%A0%B7%E5%BC%8F%E4%B9%8BFlexbox%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F/index.html">
+<meta property="og:site_name" content="FerryVip&#39;s Blog">
+<meta property="og:description" content="ReactNative style样式之Flexbox布局样式 Flexbox布局样式 ReactNative是参考文档大于0.29的版本 参考链接2 参考链接1 1. 6个属性设置在容器上1.1 任何一个容器都可以指定为Flex布局。ReactNative无 display: flex;   display: inline-flex; &#x2F;&#x2F;行内元素也可以使用Flex布局。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jap7mwnj21gc0va0zo.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jbmm98sj21c20dy3zr.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jc2qtr0j215m1460zt.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jcg1tljj21gu0c2762.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jcr73b1j218m0acgnf.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jd9q5gbj20hp0l70sn.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jehu5qqj21bw0a00uq.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jewomp8j20h50lu3yg.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jf66cjzj20kv0dca9v.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jfhit38j20ma05v3yf.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jg0qxmyj21gq0gcq6d.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jgd926fj21gq0fen0l.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jgrpxkkj21gi0i2tca.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jh5hubvj21ho13qdlf.jpg">
+<meta property="article:published_time" content="2016-06-15T07:32:51.000Z">
+<meta property="article:modified_time" content="2024-02-27T01:54:45.881Z">
+<meta property="article:author" content="FerryVip">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jap7mwnj21gc0va0zo.jpg">
+
+
+<link rel="canonical" href="https://strawferry.github.io/2016/06/15/ReactNative%20style%E6%A0%B7%E5%BC%8F%E4%B9%8BFlexbox%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://strawferry.github.io/2016/06/15/ReactNative%20style%E6%A0%B7%E5%BC%8F%E4%B9%8BFlexbox%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F/","path":"2016/06/15/ReactNative style样式之Flexbox布局样式/","title":"ReactNative style样式之Flexbox布局样式"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ReactNative style样式之Flexbox布局样式 | FerryVip's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88853535-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-88853535-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kt6ijw4ygg");
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FerryVip's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">36</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ReactNative-style%E6%A0%B7%E5%BC%8F%E4%B9%8BFlexbox%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F"><span class="nav-number">1.</span> <span class="nav-text">ReactNative style样式之Flexbox布局样式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Flexbox%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F-ReactNative%E6%98%AF%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3%E5%A4%A7%E4%BA%8E0-29%E7%9A%84%E7%89%88%E6%9C%AC"><span class="nav-number">1.0.1.</span> <span class="nav-text">Flexbox布局样式 ReactNative是参考文档大于0.29的版本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6%E4%B8%AA%E5%B1%9E%E6%80%A7%E8%AE%BE%E7%BD%AE%E5%9C%A8%E5%AE%B9%E5%99%A8%E4%B8%8A"><span class="nav-number">1.0.2.</span> <span class="nav-text">1. 6个属性设置在容器上</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-%E4%BB%BB%E4%BD%95%E4%B8%80%E4%B8%AA%E5%AE%B9%E5%99%A8%E9%83%BD%E5%8F%AF%E4%BB%A5%E6%8C%87%E5%AE%9A%E4%B8%BAFlex%E5%B8%83%E5%B1%80%E3%80%82ReactNative%E6%97%A0"><span class="nav-number">1.0.2.1.</span> <span class="nav-text">1.1 任何一个容器都可以指定为Flex布局。ReactNative无</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-flex-direction-%E5%B1%9E%E6%80%A7%E5%86%B3%E5%AE%9A%E4%B8%BB%E8%BD%B4%E7%9A%84%E6%96%B9%E5%90%91%EF%BC%88%E5%8D%B3%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%8E%92%E5%88%97%E6%96%B9%E5%90%91%EF%BC%89%E3%80%82"><span class="nav-number">1.0.2.2.</span> <span class="nav-text">1.2 flex-direction 属性决定主轴的方向（即项目的排列方向）。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-3-flex-wrap-%E6%8D%A2%E8%A1%8C"><span class="nav-number">1.0.2.3.</span> <span class="nav-text">1.3 flex-wrap 换行</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-4-flex-flow-flex-direction-%E5%92%8Cflex-wrap-%E7%9A%84%E7%AE%80%E5%86%99-ReactNative%E6%97%A0"><span class="nav-number">1.0.2.4.</span> <span class="nav-text">1.4 flex-flow flex-direction 和flex-wrap 的简写 ReactNative无</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-5-justify-content-%E6%B0%B4%E5%B9%B3%E6%8E%92%E5%88%97%E6%96%B9%E5%BC%8F"><span class="nav-number">1.0.2.5.</span> <span class="nav-text">1.5 justify-content 水平排列方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-6-align-items-%E5%9E%82%E7%9B%B4%E6%8E%92%E5%88%97%E6%96%B9%E5%BC%8F"><span class="nav-number">1.0.2.6.</span> <span class="nav-text">1.6 align-items 垂直排列方式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E5%AE%B9%E5%99%A8%E4%B8%AD%E9%A1%B9%E7%9B%AE%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.0.3.</span> <span class="nav-text">2. 容器中项目的属性</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-1-order-ReactNative%E6%97%A0"><span class="nav-number">1.0.3.1.</span> <span class="nav-text">2.1 order ReactNative无</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-flex-grow-ReactNative%E6%97%A0"><span class="nav-number">1.0.3.2.</span> <span class="nav-text">2.2 flex-grow ReactNative无</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-flex-shrink-ReactNative%E6%97%A0"><span class="nav-number">1.0.3.3.</span> <span class="nav-text">2.3 flex-shrink ReactNative无</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-4-flex-basis-ReactNative%E6%97%A0"><span class="nav-number">1.0.3.4.</span> <span class="nav-text">2.4 flex-basis ReactNative无</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-5-flex-ReactNative%E6%97%A0"><span class="nav-number">1.0.3.5.</span> <span class="nav-text">2.5 flex ReactNative无</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-6-align-self"><span class="nav-number">1.0.3.6.</span> <span class="nav-text">2.6 align-self</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-FlexBox%E5%B8%83%E5%B1%80%E7%9B%AE%E5%89%8D%E6%94%AF%E6%8C%81React-Native-%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="nav-number">1.0.4.</span> <span class="nav-text">3. FlexBox布局目前支持React Native 的属性</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FerryVip"
+      src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+  <p class="site-author-name" itemprop="name">FerryVip</p>
+  <div class="site-description" itemprop="description">好好过一生</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0cmF3ZmVycnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;strawferry"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cDovL3dlaWJvLmNvbS91LzIzNDQ1NTMyMTE=" title="Weibo → http:&#x2F;&#x2F;weibo.com&#x2F;u&#x2F;2344553211"><i class="fab fa-weibo fa-fw"></i>Weibo</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://strawferry.github.io/2016/06/15/ReactNative%20style%E6%A0%B7%E5%BC%8F%E4%B9%8BFlexbox%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+      <meta itemprop="name" content="FerryVip">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FerryVip's Blog">
+      <meta itemprop="description" content="好好过一生">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ReactNative style样式之Flexbox布局样式 | FerryVip's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ReactNative style样式之Flexbox布局样式
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-06-15 15:32:51" itemprop="dateCreated datePublished" datetime="2016-06-15T15:32:51+08:00">2016-06-15</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-02-27 09:54:45" itemprop="dateModified" datetime="2024-02-27T09:54:45+08:00">2024-02-27</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="ReactNative-style样式之Flexbox布局样式"><a href="#ReactNative-style样式之Flexbox布局样式" class="headerlink" title="ReactNative style样式之Flexbox布局样式"></a>ReactNative style样式之Flexbox布局样式</h1><hr>
+<h3 id="Flexbox布局样式-ReactNative是参考文档大于0-29的版本"><a href="#Flexbox布局样式-ReactNative是参考文档大于0-29的版本" class="headerlink" title="Flexbox布局样式 ReactNative是参考文档大于0.29的版本"></a>Flexbox布局样式 ReactNative是参考文档大于0.29的版本</h3><hr>
+<p><span class="exturl" data-url="aHR0cDovL3d3dy5ydWFueWlmZW5nLmNvbS9ibG9nLzIwMTUvMDcvZmxleC1ncmFtbWFyLmh0bWw=">参考链接2<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9jc3MtdHJpY2tzLmNvbS9zbmlwcGV0cy9jc3MvYS1ndWlkZS10by1mbGV4Ym94Lw==">参考链接1<i class="fa fa-external-link-alt"></i></span></p>
+<h3 id="1-6个属性设置在容器上"><a href="#1-6个属性设置在容器上" class="headerlink" title="1. 6个属性设置在容器上"></a>1. 6个属性设置在容器上</h3><h4 id="1-1-任何一个容器都可以指定为Flex布局。ReactNative无"><a href="#1-1-任何一个容器都可以指定为Flex布局。ReactNative无" class="headerlink" title="1.1 任何一个容器都可以指定为Flex布局。ReactNative无"></a>1.1 任何一个容器都可以指定为Flex布局。<strong>ReactNative无</strong></h4><blockquote>
+<p><strong>display: flex;</strong></p>
+</blockquote>
+<blockquote>
+<p><strong>display: inline-flex; &#x2F;&#x2F;行内元素也可以使用Flex布局。</strong><br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jap7mwnj21gc0va0zo.jpg" alt="flex布局元素"></p>
+</blockquote>
+<h4 id="1-2-flex-direction-属性决定主轴的方向（即项目的排列方向）。"><a href="#1-2-flex-direction-属性决定主轴的方向（即项目的排列方向）。" class="headerlink" title="1.2 flex-direction 属性决定主轴的方向（即项目的排列方向）。"></a>1.2 <code>flex-direction</code> 属性决定主轴的方向（即项目的排列方向）。</h4><blockquote>
+<p><code>flex-direction: row(默认值) | row-reverse | column | column-reverse</code>;</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>ReactNative 中的 <code>flexDirection</code>: <code>column</code>(默认值) | <code>column-reverse</code> | <code>row</code> | <code>row-reverse</code>;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jbmm98sj21c20dy3zr.jpg" alt="flex-direction 排列方向"></p>
+</blockquote>
+<h4 id="1-3-flex-wrap-换行"><a href="#1-3-flex-wrap-换行" class="headerlink" title="1.3 flex-wrap 换行"></a>1.3 <code>flex-wrap</code> 换行</h4><blockquote>
+<p><code>flex-wrap: nowrap | wrap | wrap-reverse</code>;</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>ReactNative 中的 <code>flexWrap</code>: <code>nowrap</code> | <code>wrap</code> ;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jc2qtr0j215m1460zt.jpg" alt="flex-wrap 换行"></p>
+</blockquote>
+<h4 id="1-4-flex-flow-flex-direction-和flex-wrap-的简写-ReactNative无"><a href="#1-4-flex-flow-flex-direction-和flex-wrap-的简写-ReactNative无" class="headerlink" title="1.4 flex-flow flex-direction 和flex-wrap 的简写 ReactNative无"></a>1.4 <code>flex-flow</code> flex-direction 和flex-wrap 的简写 <strong>ReactNative无</strong></h4><blockquote>
+<p><code>flex-flow : row || nowrap</code>;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jcg1tljj21gu0c2762.jpg" alt="flex-flow"></p>
+</blockquote>
+<h4 id="1-5-justify-content-水平排列方式"><a href="#1-5-justify-content-水平排列方式" class="headerlink" title="1.5 justify-content 水平排列方式"></a>1.5 justify-content 水平排列方式</h4><blockquote>
+<p><code>justify-content: flex-start | flex-end | center | space-between | space-around</code>;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jcr73b1j218m0acgnf.jpg" alt="justify-content 水平排列方式"></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>ReactNative中的 <code>justifyContent: flex-start | flex-end | center | space-between | space-around</code>;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jd9q5gbj20hp0l70sn.jpg" alt="justify-content 水平排列方式"></p>
+</blockquote>
+<h4 id="1-6-align-items-垂直排列方式"><a href="#1-6-align-items-垂直排列方式" class="headerlink" title="1.6 align-items 垂直排列方式"></a>1.6 align-items 垂直排列方式</h4><blockquote>
+<p><code>align-items: flex-start | flex-end | center | baseline | stretch</code>;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jehu5qqj21bw0a00uq.jpg" alt="align-items 垂直排列方式"></p>
+</blockquote>
+<hr>
+<blockquote>
+<p>ReactNative中的 <code>alignItems: flex-start | flex-end | center | stretch</code>;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jewomp8j20h50lu3yg.jpg" alt="align-items 垂直排列方式"></p>
+</blockquote>
+<h3 id="2-容器中项目的属性"><a href="#2-容器中项目的属性" class="headerlink" title="2. 容器中项目的属性"></a>2. 容器中项目的属性</h3><h4 id="2-1-order-ReactNative无"><a href="#2-1-order-ReactNative无" class="headerlink" title="2.1 order ReactNative无"></a>2.1 order <strong>ReactNative无</strong></h4><blockquote>
+<p><code>order :&lt;number&gt;</code>; &#x2F;* default 0 *&#x2F;属性定义项目的排列顺序。数值越小，排列越靠前，默认为0。<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jf66cjzj20kv0dca9v.jpg" alt="order"></p>
+</blockquote>
+<h4 id="2-2-flex-grow-ReactNative无"><a href="#2-2-flex-grow-ReactNative无" class="headerlink" title="2.2 flex-grow ReactNative无"></a>2.2 flex-grow <strong>ReactNative无</strong></h4><blockquote>
+<p><code>flex-grow:&lt;number&gt;</code>; &#x2F;* default 0 *&#x2F;属性定义项目的放大比例，默认为0，即如果存在剩余空间，也不放大。如果所有项目的flex-grow属性都为1，则它们将等分剩余空间（如果有的话）。如果一个项目的flex-grow属性为2，其他项目都为1，则前者占据的剩余空间将比其他项多一倍。<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jfhit38j20ma05v3yf.jpg" alt="flex-grow"></p>
+</blockquote>
+<h4 id="2-3-flex-shrink-ReactNative无"><a href="#2-3-flex-shrink-ReactNative无" class="headerlink" title="2.3 flex-shrink ReactNative无"></a>2.3 flex-shrink <strong>ReactNative无</strong></h4><blockquote>
+<p>flex-shrink: <number>; &#x2F;* default 1 *&#x2F;属性定义了项目的缩小比例，默认为1，即如果空间不足，该项目将缩小。flex-basis<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jg0qxmyj21gq0gcq6d.jpg" alt="flex-shrink"></p>
+</blockquote>
+<h4 id="2-4-flex-basis-ReactNative无"><a href="#2-4-flex-basis-ReactNative无" class="headerlink" title="2.4 flex-basis ReactNative无"></a>2.4 flex-basis <strong>ReactNative无</strong></h4><blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jgd926fj21gq0fen0l.jpg" alt="flex-basis"></p>
+</blockquote>
+<h4 id="2-5-flex-ReactNative无"><a href="#2-5-flex-ReactNative无" class="headerlink" title="2.5 flex ReactNative无"></a>2.5 flex <strong>ReactNative无</strong></h4><blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jgrpxkkj21gi0i2tca.jpg" alt="flex"></p>
+</blockquote>
+<h4 id="2-6-align-self"><a href="#2-6-align-self" class="headerlink" title="2.6 align-self"></a>2.6 align-self</h4><blockquote>
+<p><code>align-self: auto | flex-start | flex-end | center | baseline | stretch</code>;</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>ReactNative中的 <code>alignSelf: auto | flex-start | flex-end | center | stretch</code>;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fq8jh5hubvj21ho13qdlf.jpg"></p>
+</blockquote>
+<h3 id="3-FlexBox布局目前支持React-Native-的属性"><a href="#3-FlexBox布局目前支持React-Native-的属性" class="headerlink" title="3. FlexBox布局目前支持React Native 的属性"></a>3. FlexBox布局目前支持React Native 的属性</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">FlexBox布局目前支持React Native 的属性有如下6个：</span><br><span class="line">(1) flex :number  大于0的时候才可伸缩，按照大小显示伸缩比例；</span><br><span class="line">(2) flexDirection :column(容器设置的属性:主轴方向默认－垂直方向，从上倒下)| `column-reverse` | row（水平方向，从左到右）| `row-reverse`；</span><br><span class="line">(3) flexWrap :wrap(换行) －－nowrap(不换行)//容器设置的属性</span><br><span class="line">(4) alignItems :flex-start | flex-end | center | stretch (容器设置的属性:伸缩项目在伸缩容器中的交叉轴的对齐方式)；</span><br><span class="line">(5) justifyContent : flex-start | flex-end | center | space-between | space-aronud （容器设置的属性:伸缩项目沿着垂直方向的对齐方式）；</span><br><span class="line">(6) alignSelf : flex-start | flex-end | center | auto | stretch。（伸缩项目在交叉轴的对齐方式）；</span><br><span class="line">(7) position : &#x27;absolute&#x27; | &#x27;relative&#x27; ;</span><br><span class="line">(8) zIndex : number ;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/06/10/React%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" rel="prev" title="React 组件的生命周期">
+                  <i class="fa fa-angle-left"></i> React 组件的生命周期
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/06/26/React%20Native%20%E7%89%B9%E5%AE%9A%E5%B9%B3%E5%8F%B0%E9%80%89%E6%8B%A9-Platform/" rel="next" title="React Native 特定平台选择-Platform">
+                  React Native 特定平台选择-Platform <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">FerryVip</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js","integrity":"sha256-9y71g5Lz/KLsHjB8uXwnkuWDtAMDSzD/HdIbqhJfTAI="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
