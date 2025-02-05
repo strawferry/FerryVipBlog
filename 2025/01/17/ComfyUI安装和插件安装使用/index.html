@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"strawferry.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"show_result":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ComfyUI安装 ComfyUI Desktop 官方下载  选择对应的电脑系统版本下载,我这边是 Mac 系统,所以本文是基于 Mac 系统的安装教程   下载完成后,双击安装包,按照提示安装即可  2.1 选择安装目录,直接选择默认目录即可    2.2 选择合并之前的模型等文件目录,未安装直接选择默认目录即可   2.3 客户端设置,设置完成之后就开始安装软件的依赖   安装过程中可能会出">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ComfyUI安装和插件安装使用">
+<meta property="og:url" content="https://strawferry.github.io/2025/01/17/ComfyUI%E5%AE%89%E8%A3%85%E5%92%8C%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/index.html">
+<meta property="og:site_name" content="FerryVip&#39;s Blog">
+<meta property="og:description" content="ComfyUI安装 ComfyUI Desktop 官方下载  选择对应的电脑系统版本下载,我这边是 Mac 系统,所以本文是基于 Mac 系统的安装教程   下载完成后,双击安装包,按照提示安装即可  2.1 选择安装目录,直接选择默认目录即可    2.2 选择合并之前的模型等文件目录,未安装直接选择默认目录即可   2.3 客户端设置,设置完成之后就开始安装软件的依赖   安装过程中可能会出">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/21-49-04-q6sflH.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/21-51-40-mTicqo.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/21-55-54-lnalTz.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-23-11-2JyMn3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-26-30-UAT4W7.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-29-58-BrvsM3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-32-02-jVAKqu.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-36-42-HpXzSF.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-39-53-5jHuvJ.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-44-44-5sbvVp.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-44-10-RqbS0T.png">
+<meta property="article:published_time" content="2025-01-17T02:26:34.000Z">
+<meta property="article:modified_time" content="2025-02-03T14:50:32.462Z">
+<meta property="article:author" content="FerryVip">
+<meta property="article:tag" content="ComfyUI, ComfyUI 安装, ComfyUI 插件安装, ComfyUI 插件使用">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/21-49-04-q6sflH.png">
+
+
+<link rel="canonical" href="https://strawferry.github.io/2025/01/17/ComfyUI%E5%AE%89%E8%A3%85%E5%92%8C%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://strawferry.github.io/2025/01/17/ComfyUI%E5%AE%89%E8%A3%85%E5%92%8C%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/","path":"2025/01/17/ComfyUI安装和插件安装使用/","title":"ComfyUI安装和插件安装使用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ComfyUI安装和插件安装使用 | FerryVip's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88853535-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-88853535-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kt6ijw4ygg");
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FerryVip's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术分享</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">40</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#ComfyUI%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">ComfyUI安装</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FerryVip"
+      src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+  <p class="site-author-name" itemprop="name">FerryVip</p>
+  <div class="site-description" itemprop="description">好好过一生</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0cmF3ZmVycnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;strawferry"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly94aWFvaG9uZ3NodXNoYXJlLm9ubGluZQ==" title="Share工具 → https:&#x2F;&#x2F;xiaohongshushare.online"><i class="fa fa-link fa-fw"></i>Share工具</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://strawferry.github.io/2025/01/17/ComfyUI%E5%AE%89%E8%A3%85%E5%92%8C%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85%E4%BD%BF%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+      <meta itemprop="name" content="FerryVip">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FerryVip's Blog">
+      <meta itemprop="description" content="好好过一生">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ComfyUI安装和插件安装使用 | FerryVip's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ComfyUI安装和插件安装使用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-01-17 10:26:34" itemprop="dateCreated datePublished" datetime="2025-01-17T10:26:34+08:00">2025-01-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-02-03 22:50:32" itemprop="dateModified" datetime="2025-02-03T22:50:32+08:00">2025-02-03</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="ComfyUI安装"><a href="#ComfyUI安装" class="headerlink" title="ComfyUI安装"></a>ComfyUI安装</h2><ol>
+<li><span class="exturl" data-url="aHR0cHM6Ly9jb21meW9yZy5ub3Rpb24uc2l0ZS9Db21meVVJLURlc2t0b3AtVXNlci1HdWlkZS0xMTQ2ZDczZDM2NTA4MGE0OTA1OGU4ZDYyOTc3MmYwYQ==">ComfyUI Desktop 官方下载<i class="fa fa-external-link-alt"></i></span></li>
+</ol>
+<p>选择对应的电脑系统版本下载,我这边是 Mac 系统,所以本文是基于 Mac 系统的安装教程</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/21-49-04-q6sflH.png" alt="选择对应的系统下载"></p>
+<ol start="2">
+<li><p>下载完成后,双击安装包,按照提示安装即可</p>
+<p> 2.1 选择安装目录,直接选择默认目录即可</p>
+</li>
+</ol>
+<p><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/21-51-40-mTicqo.png" alt="选择安装目录"></p>
+<pre><code>2.2 选择合并之前的模型等文件目录,未安装直接选择默认目录即可
+</code></pre>
+<p><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/21-55-54-lnalTz.png" alt="模型等存放目录"></p>
+<pre><code>2.3 客户端设置,设置完成之后就开始安装软件的依赖
+</code></pre>
+<ol start="3">
+<li>安装过程中可能会出现依赖安装失败的情况</li>
+</ol>
+<p>3.1 出现依赖安装失败的情况,可以尝试重新安装依赖</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 出现下面的依赖安装错误</span></span><br><span class="line">/Applications/ComfyUI.app/Contents/Resources/uv/macos/uv <span class="string">&quot;pip&quot;</span> <span class="string">&quot;install&quot;</span> <span class="string">&quot;-r&quot;</span> <span class="string">&quot;/Applications/ComfyUI.app/Contents/Resources/ComfyUI/requirements.txt&quot;</span></span><br><span class="line"><span class="comment"># 出现这个问题有可能原因是网络问题,可以尝试使用国内的源去按照</span></span><br><span class="line">/Applications/ComfyUI.app/Contents/Resources/uv/macos/uv pip install --dry-run -r /Applications/ComfyUI.app/Contents/Resources/ComfyUI/requirements.txt <span class="keyword">in</span> /Users/m4/Documents/ComfyUI [200~-i http://mirrors.aliyun.com/pypi/simple/ --trusted-host mirrors.aliyun.com</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>3.2 安装失败后重新打开软件,出现下面的界面<br>这个地方只能通过 continue 来继续安装,或者自己点击 install 来安装依赖<br><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-23-11-2JyMn3.png" alt="安装失败"></p>
+<p>实在没有解决只能卸载后,重新安装客户端,保证网络通畅</p>
+<ol start="4">
+<li>安装完成后,打开软件,会出现下面的界面,点击 Launch ComfyUI 来启动软件</li>
+</ol>
+<p><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-26-30-UAT4W7.png" alt="启动页面"></p>
+<ol start="5">
+<li>启动后成功进入 ComfyUI 界面,有个默认的工作流</li>
+</ol>
+<p><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-29-58-BrvsM3.png" alt="默认工作流"></p>
+<ol start="6">
+<li>页面设置成中文</li>
+</ol>
+<p><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-32-02-jVAKqu.png" alt="系统设置中文"></p>
+<p><span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL0FJR09ETElLRS9BSUdPRExJS0UtQ09NRllVSS1UUkFOU0xBVElPTg==">AIGODLIKE-COMFYUI-TRANSLATION<i class="fa fa-external-link-alt"></i></span>插件设置成中文</p>
+<p>通过搜索下载插件,点击下载安装,安装后需要重启软件才能生效</p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-36-42-HpXzSF.png" alt="插件安装"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-39-53-5jHuvJ.png" alt="插件翻译的比较全"></p>
+<ol start="7">
+<li>运行默认工作流</li>
+</ol>
+<p>软件刚刚安装完成,电脑内还没有模型,所以运行默认工作流会报错,需要先下载模型<br><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-44-44-5sbvVp.png" alt="模型缺失下载"></p>
+<p><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/20250129/22-44-10-RqbS0T.png" alt="默认工作流执行"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ComfyUI-ComfyUI-%E5%AE%89%E8%A3%85-ComfyUI-%E6%8F%92%E4%BB%B6%E5%AE%89%E8%A3%85-ComfyUI-%E6%8F%92%E4%BB%B6%E4%BD%BF%E7%94%A8/" rel="tag"># ComfyUI, ComfyUI 安装, ComfyUI 插件安装, ComfyUI 插件使用</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2024/02/19/%E5%A6%82%E4%BD%95%E5%BE%AE%E8%B0%83%E5%92%8C%E4%BF%AE%E6%94%B9%E5%89%8D%E7%AB%AF%E4%BE%9D%E8%B5%96%E5%8C%85/" rel="prev" title="如何微调和修改前端依赖包">
+                  <i class="fa fa-angle-left"></i> 如何微调和修改前端依赖包
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/01/17/%E5%B0%8F%E7%BA%A2%E4%B9%A6%E5%88%86%E4%BA%AB%E5%B7%A5%E5%85%B7%E5%BC%80%E5%8F%91/" rel="next" title="小红书分享工具开发">
+                  小红书分享工具开发 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">FerryVip</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js","integrity":"sha256-9y71g5Lz/KLsHjB8uXwnkuWDtAMDSzD/HdIbqhJfTAI="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

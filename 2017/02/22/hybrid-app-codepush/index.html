@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"strawferry.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"show_result":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="混合app集成热更新原因是因为之前做的都是纯 rn 项目,偶尔接入原生,所以 codepush 比较好集成. 有一次在想如果原本是原生的项目,后面只是引入 rn 作为一些基础模块,这样的更新要如何做,也就有了这篇文章(技术很早实现了,博客因为懒后面盆友需要,拖了现在才写,也是尴尬); 1. 前提工作你目前的 iOS 项目已经是 ReactNative 混合 App;这边我用我之前的来做,具体代码可">
+<meta property="og:type" content="article">
+<meta property="og:title" content="混合app集成热更新">
+<meta property="og:url" content="https://strawferry.github.io/2017/02/22/hybrid-app-codepush/index.html">
+<meta property="og:site_name" content="FerryVip&#39;s Blog">
+<meta property="og:description" content="混合app集成热更新原因是因为之前做的都是纯 rn 项目,偶尔接入原生,所以 codepush 比较好集成. 有一次在想如果原本是原生的项目,后面只是引入 rn 作为一些基础模块,这样的更新要如何做,也就有了这篇文章(技术很早实现了,博客因为懒后面盆友需要,拖了现在才写,也是尴尬); 1. 前提工作你目前的 iOS 项目已经是 ReactNative 混合 App;这边我用我之前的来做,具体代码可">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fczbmb0flej20hp0aftbz">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fczbxpo37qj20qs0lqk2g">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fczc7np6mwj20pp0ezakd">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fczcaop98uj20qs0lq7dn">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fczcl67242j20vn0v4wvj">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fczclg4mmqj20vn0v4n94">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fczcq1yucej20wz0cl7a8">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fczd173ncnj20rd0ign3j">
+<meta property="article:published_time" content="2017-02-22T07:55:02.000Z">
+<meta property="article:modified_time" content="2023-08-20T01:56:56.000Z">
+<meta property="article:author" content="FerryVip">
+<meta property="article:tag" content="前端,分享,博客,前端开发,前端技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1fczbmb0flej20hp0aftbz">
+
+
+<link rel="canonical" href="https://strawferry.github.io/2017/02/22/hybrid-app-codepush/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://strawferry.github.io/2017/02/22/hybrid-app-codepush/","path":"2017/02/22/hybrid-app-codepush/","title":"混合app集成热更新"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>混合app集成热更新 | FerryVip's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88853535-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-88853535-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kt6ijw4ygg");
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FerryVip's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术分享</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">40</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B7%E5%90%88app%E9%9B%86%E6%88%90%E7%83%AD%E6%9B%B4%E6%96%B0"><span class="nav-number">1.</span> <span class="nav-text">混合app集成热更新</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%89%8D%E6%8F%90%E5%B7%A5%E4%BD%9C"><span class="nav-number">1.1.</span> <span class="nav-text">1. 前提工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BA%86%E8%A7%A3%E4%B8%80%E4%BA%9B-codepush-%E7%9A%84%E5%8E%9F%E7%90%86"><span class="nav-number">1.2.</span> <span class="nav-text">2. 了解一些 codepush 的原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E9%9B%86%E6%88%90%E8%BF%9B%E5%85%A5-App-%E9%A1%B9%E7%9B%AE%E9%87%8C"><span class="nav-number">1.3.</span> <span class="nav-text">3. 集成进入 App 项目里</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%85%8D%E7%BD%AE-codepush-%E7%9A%84-key"><span class="nav-number">1.4.</span> <span class="nav-text">4. 配置 codepush 的 key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E5%8E%9F%E7%94%9F%E4%BB%A3%E7%A0%81%E9%85%8D%E7%BD%AE"><span class="nav-number">1.5.</span> <span class="nav-text">5. 原生代码配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-js-%E4%BB%A3%E7%A0%81%E7%9A%84%E9%85%8D%E7%BD%AE"><span class="nav-number">1.6.</span> <span class="nav-text">6. js 代码的配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-iOS-%E6%89%93-release-%E5%8C%85"><span class="nav-number">1.7.</span> <span class="nav-text">7. iOS 打 release 包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#8-%E6%89%93-codepush-%E6%9B%B4%E6%96%B0%E5%8C%85"><span class="nav-number">1.8.</span> <span class="nav-text">8. 打 codepush 更新包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-%E5%88%B0%E6%AD%A4%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9D%9F-%E6%A0%B9%E6%8D%AE%E4%BD%A0%E8%AE%BE%E7%BD%AE%E7%9A%84%E6%9B%B4%E6%96%B0%E6%9D%A1%E4%BB%B6-App-%E5%B0%B1%E4%BC%9A%E8%87%AA%E5%8A%A8%E6%9B%B4%E6%96%B0%E4%BA%86"><span class="nav-number">1.9.</span> <span class="nav-text">9. 到此基本结束,根据你设置的更新条件, App 就会自动更新了;</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FerryVip"
+      src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+  <p class="site-author-name" itemprop="name">FerryVip</p>
+  <div class="site-description" itemprop="description">好好过一生</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0cmF3ZmVycnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;strawferry"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly94aWFvaG9uZ3NodXNoYXJlLm9ubGluZQ==" title="Share工具 → https:&#x2F;&#x2F;xiaohongshushare.online"><i class="fa fa-link fa-fw"></i>Share工具</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://strawferry.github.io/2017/02/22/hybrid-app-codepush/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+      <meta itemprop="name" content="FerryVip">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FerryVip's Blog">
+      <meta itemprop="description" content="好好过一生">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="混合app集成热更新 | FerryVip's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          混合app集成热更新
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-02-22 15:55:02" itemprop="dateCreated datePublished" datetime="2017-02-22T15:55:02+08:00">2017-02-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-20 09:56:56" itemprop="dateModified" datetime="2023-08-20T09:56:56+08:00">2023-08-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="混合app集成热更新"><a href="#混合app集成热更新" class="headerlink" title="混合app集成热更新"></a>混合app集成热更新</h1><p>原因是因为之前做的都是纯 rn 项目,偶尔接入原生,所以 codepush 比较好集成.</p>
+<p>有一次在想如果原本是原生的项目,后面只是引入 rn 作为一些基础模块,这样的更新要如何做,也就有了这篇文章(技术很早实现了,博客因为懒后面盆友需要,拖了现在才写,也是尴尬);</p>
+<h2 id="1-前提工作"><a href="#1-前提工作" class="headerlink" title="1. 前提工作"></a>1. 前提工作</h2><p>你目前的 iOS 项目已经是 ReactNative 混合 App;<br>这边我用我之前的来做,具体代码可以看<span class="exturl" data-url="aHR0cHM6Ly9mZXJyeXZpcC5jb2RpbmcubWUvRmVycnlWaXBCbG9nLzIwMTYvMTIvMjgvaU9TLXdpdGgtUmVhY3ROYXRpdmUv">这个链接(国内Coding)<i class="fa fa-external-link-alt"></i></span>或者<a href="https://strawferry.github.io/FerryVipBlog/2016/12/28/iOS-with-ReactNative/">这个链接(国外github)</a>;</p>
+<h2 id="2-了解一些-codepush-的原理"><a href="#2-了解一些-codepush-的原理" class="headerlink" title="2. 了解一些 codepush 的原理"></a>2. 了解一些 codepush 的原理</h2><p>之前在 CSDN 写的 codepush 相关的博客</p>
+<p><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RyYXdmZXJyeS9hcnRpY2xlL2RldGFpbHMvNTIxMjQzNjI=">CodePush 热更新ReactNative之CodePush CLI操作<i class="fa fa-external-link-alt"></i></span></p>
+<p><span class="exturl" data-url="aHR0cDovL2Jsb2cuY3Nkbi5uZXQvc3RyYXdmZXJyeS9hcnRpY2xlL2RldGFpbHMvNTIxMzA4NzA=">CodePush 热更新ReactNative之React Native Client SDK<i class="fa fa-external-link-alt"></i></span></p>
+<p>可以看下了解,当然最好去<span class="exturl" data-url="aHR0cHM6Ly9taWNyb3NvZnQuZ2l0aHViLmlvL2NvZGUtcHVzaC9pbmRleC5odG1s">官方 gayhub 去看文档<i class="fa fa-external-link-alt"></i></span>比较好;</p>
+<p>按照文档吧 codepush 的环境安装好👌;</p>
+<h2 id="3-集成进入-App-项目里"><a href="#3-集成进入-App-项目里" class="headerlink" title="3. 集成进入 App 项目里"></a>3. 集成进入 App 项目里</h2><ol>
+<li>安装 codepush 模块 <code>npm install --save react-native-code-push@latest</code>;</li>
+<li>在安装完成后,可以执行命令自动导包进去 <code>react-native link react-native-code-push</code>, 当然也可以手动导包,自己<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pY3Jvc29mdC9yZWFjdC1uYXRpdmUtY29kZS1wdXNoL2Jsb2IvbWFzdGVyL2RvY3Mvc2V0dXAtaW9zLm1k">看下官方文档<i class="fa fa-external-link-alt"></i></span>;<br>在自动导包时,会要求你添加 codepush 的 key, 可以跳过下面会说到怎么添加;</li>
+<li>到此就可以看到 package.json 里面多了一个模块;<br>目录变化<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fczbmb0flej20hp0aftbz" alt="目录变化"></li>
+</ol>
+<p>原生项目文件变化,添加了 CodePush 工程,还有一些静态库,至于 AppDelegate.m 里面的好像是会有,有点忘记了;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fczbxpo37qj20qs0lqk2g" alt="原生项目文件变化"></p>
+<h2 id="4-配置-codepush-的-key"><a href="#4-配置-codepush-的-key" class="headerlink" title="4. 配置 codepush 的 key"></a>4. 配置 codepush 的 key</h2><ol>
+<li>codepush 创建 app <code>code-push app add MyApp-iOS</code> 会从中得到一个 key ,复制这个 key ,下一步在 iOS 原生中会用到;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fczc7np6mwj20pp0ezakd" alt="key"></li>
+<li>iOS中原生配置 key ,在 Info.plist 文件中,如下图;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fczcaop98uj20qs0lq7dn"></li>
+</ol>
+<h2 id="5-原生代码配置"><a href="#5-原生代码配置" class="headerlink" title="5. 原生代码配置"></a>5. 原生代码配置</h2><ol>
+<li>AppDelegate.m 文件中配置,为了一进入 App 就加载好了, codepush 环境,我个人认为的,没有去测试;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fczcl67242j20vn0v4wvj"></li>
+<li>在每处用到混合的地方加入代码,这边我用到了两处,所以两个的 .m 文件中,我都加入类似的代码;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fczclg4mmqj20vn0v4n94"></li>
+</ol>
+<h2 id="6-js-代码的配置"><a href="#6-js-代码的配置" class="headerlink" title="6. js 代码的配置"></a>6. js 代码的配置</h2><p>js 基本的配置就是这些,具体的有些配置,可以<span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL01pY3Jvc29mdC9yZWFjdC1uYXRpdmUtY29kZS1wdXNoL2Jsb2IvbWFzdGVyL2RvY3MvYXBpLWpzLm1k">官方文档看下<i class="fa fa-external-link-alt"></i></span>;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fczcq1yucej20wz0cl7a8"></p>
+<h2 id="7-iOS-打-release-包"><a href="#7-iOS-打-release-包" class="headerlink" title="7. iOS 打 release 包"></a>7. iOS 打 release 包</h2><ol>
+<li>在 js 主目录下,执行命令 <code>curl http://localhost:8081/index.ios.bundle -o main.jsbundle</code> 会在目录下有个 main.jsbundle 的文件,这个需要拖到 iOS 原生目录下,每次打包重新生成,都需要替换进去;<br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1fczd173ncnj20rd0ign3j"></li>
+<li>iOS 打包 ipa 包,只要把刚才的 main.jsbundle 拖进去,剩下的步骤和正常打包一样;</li>
+</ol>
+<h2 id="8-打-codepush-更新包"><a href="#8-打-codepush-更新包" class="headerlink" title="8. 打 codepush 更新包"></a>8. 打 codepush 更新包</h2><p>在 js 的目录下,执行命令 <code>code-push release-react youAppName ios</code>, 最简单命令,直接推到Staging;</p>
+<h2 id="9-到此基本结束-根据你设置的更新条件-App-就会自动更新了"><a href="#9-到此基本结束-根据你设置的更新条件-App-就会自动更新了" class="headerlink" title="9. 到此基本结束,根据你设置的更新条件, App 就会自动更新了;"></a>9. 到此基本结束,根据你设置的更新条件, App 就会自动更新了;</h2>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/12/28/iOS-with-ReactNative/" rel="prev" title="iOS-with-ReactNative">
+                  <i class="fa fa-angle-left"></i> iOS-with-ReactNative
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/03/12/pm2%20node%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/" rel="next" title="pm2 node 服务器部署">
+                  pm2 node 服务器部署 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">FerryVip</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js","integrity":"sha256-9y71g5Lz/KLsHjB8uXwnkuWDtAMDSzD/HdIbqhJfTAI="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

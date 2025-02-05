@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"strawferry.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"show_result":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="0. 起因最近工作中要对系统做整体重构,需要封装一些基础的组件,封装基础组件参照如下准则:  组件基本样式统一,留有可修改空间; 把默认要的一些基本功能配置,直接写到基础组件配置中,避免重复配置; 具备和原本组件一致的接口定义;  下面就通过封装 ProTable 表格基础组件的例子. 1. 分析业务的默认需求配置 在业务中有很多默认的设置,比如单行文本过长折叠,页脚设置统一等; 通过封装使功能简">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基础业务组件封装方法">
+<meta property="og:url" content="https://strawferry.github.io/2023/10/12/%E5%9F%BA%E7%A1%80%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6%E5%B0%81%E8%A3%85%E6%96%B9%E6%B3%95/index.html">
+<meta property="og:site_name" content="FerryVip&#39;s Blog">
+<meta property="og:description" content="0. 起因最近工作中要对系统做整体重构,需要封装一些基础的组件,封装基础组件参照如下准则:  组件基本样式统一,留有可修改空间; 把默认要的一些基本功能配置,直接写到基础组件配置中,避免重复配置; 具备和原本组件一致的接口定义;  下面就通过封装 ProTable 表格基础组件的例子. 1. 分析业务的默认需求配置 在业务中有很多默认的设置,比如单行文本过长折叠,页脚设置统一等; 通过封装使功能简">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/%202024-02/27-10-18-0oNfH4-xpDHz0.png">
+<meta property="article:published_time" content="2023-10-12T03:26:34.000Z">
+<meta property="article:modified_time" content="2024-03-08T14:30:00.000Z">
+<meta property="article:author" content="FerryVip">
+<meta property="article:tag" content="前端,分享,博客,前端开发,前端技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/%202024-02/27-10-18-0oNfH4-xpDHz0.png">
+
+
+<link rel="canonical" href="https://strawferry.github.io/2023/10/12/%E5%9F%BA%E7%A1%80%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6%E5%B0%81%E8%A3%85%E6%96%B9%E6%B3%95/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://strawferry.github.io/2023/10/12/%E5%9F%BA%E7%A1%80%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6%E5%B0%81%E8%A3%85%E6%96%B9%E6%B3%95/","path":"2023/10/12/基础业务组件封装方法/","title":"基础业务组件封装方法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>基础业务组件封装方法 | FerryVip's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88853535-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-88853535-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kt6ijw4ygg");
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FerryVip's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术分享</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">40</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">0. 起因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%88%86%E6%9E%90%E4%B8%9A%E5%8A%A1%E7%9A%84%E9%BB%98%E8%AE%A4%E9%9C%80%E6%B1%82%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">1. 分析业务的默认需求配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">2. 代码实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E5%8D%95%E8%A1%8C%E6%96%87%E6%9C%AC%E8%BF%87%E9%95%BF%E6%8A%98%E5%8F%A0%E9%BB%98%E8%AE%A4%E9%85%8D%E7%BD%AE"><span class="nav-number">3.1.</span> <span class="nav-text">2.1 单行文本过长折叠默认配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%AE%80%E5%8D%95%E9%85%8D%E7%BD%AE%E8%AE%BE%E7%BD%AE%E8%A1%A8%E5%A4%B4%E7%9A%84%E6%8E%92%E5%BA%8F%E5%B1%95%E7%A4%BA%E6%9C%AC%E5%9C%B0%E5%AD%98%E5%82%A8"><span class="nav-number">3.2.</span> <span class="nav-text">2.2 简单配置设置表头的排序展示本地存储</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%B0%81%E8%A3%85%E5%89%8D%E5%90%8E%E8%B0%83%E7%94%A8%E5%AF%B9%E6%AF%94"><span class="nav-number">3.3.</span> <span class="nav-text">2.3 封装前后调用对比</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-%E5%AE%8C%E6%95%B4%E5%B0%81%E8%A3%85%E4%BB%A3%E7%A0%81"><span class="nav-number">4.</span> <span class="nav-text">3. 完整封装代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E5%8F%82%E8%80%83%E5%BC%95%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">4. 参考引用</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FerryVip"
+      src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+  <p class="site-author-name" itemprop="name">FerryVip</p>
+  <div class="site-description" itemprop="description">好好过一生</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0cmF3ZmVycnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;strawferry"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly94aWFvaG9uZ3NodXNoYXJlLm9ubGluZQ==" title="Share工具 → https:&#x2F;&#x2F;xiaohongshushare.online"><i class="fa fa-link fa-fw"></i>Share工具</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://strawferry.github.io/2023/10/12/%E5%9F%BA%E7%A1%80%E4%B8%9A%E5%8A%A1%E7%BB%84%E4%BB%B6%E5%B0%81%E8%A3%85%E6%96%B9%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+      <meta itemprop="name" content="FerryVip">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FerryVip's Blog">
+      <meta itemprop="description" content="好好过一生">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="基础业务组件封装方法 | FerryVip's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          基础业务组件封装方法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-12 11:26:34" itemprop="dateCreated datePublished" datetime="2023-10-12T11:26:34+08:00">2023-10-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-03-08 22:30:00" itemprop="dateModified" datetime="2024-03-08T22:30:00+08:00">2024-03-08</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="0-起因"><a href="#0-起因" class="headerlink" title="0. 起因"></a>0. 起因</h2><p>最近工作中要对系统做整体重构,需要封装一些基础的组件,封装基础组件参照如下准则:</p>
+<ol>
+<li>组件基本样式统一,留有可修改空间;</li>
+<li>把默认要的一些基本功能配置,直接写到基础组件配置中,避免重复配置;</li>
+<li>具备和原本组件一致的接口定义;</li>
+</ol>
+<p>下面就通过封装 <code>ProTable</code> 表格基础组件的例子.</p>
+<h2 id="1-分析业务的默认需求配置"><a href="#1-分析业务的默认需求配置" class="headerlink" title="1. 分析业务的默认需求配置"></a>1. 分析业务的默认需求配置</h2><ol>
+<li>在业务中有很多默认的设置,比如单行文本过长折叠,页脚设置统一等;</li>
+<li>通过封装使功能简单就可以调用,比如 设置表头的排序展示本地存储;</li>
+<li>搜索展示多行的功能;</li>
+</ol>
+<p><img data-src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/%202024-02/27-10-18-0oNfH4-xpDHz0.png" alt="27-10-18-0oNfH4-xpDHz0"></p>
+<h2 id="2-代码实现"><a href="#2-代码实现" class="headerlink" title="2. 代码实现"></a>2. 代码实现</h2><h3 id="2-1-单行文本过长折叠默认配置"><a href="#2-1-单行文本过长折叠默认配置" class="headerlink" title="2.1 单行文本过长折叠默认配置"></a>2.1 单行文本过长折叠默认配置</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 1. 默认全部折叠,新增一个 excludeEllipsis 排除折叠的数组配置</span></span><br><span class="line"><span class="comment">/** ProTable 的类型定义 继承自 antd 的 Table */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">type</span> <span class="title class_">CSProTableProps</span>&lt;<span class="title class_">DataSource</span>, U, <span class="title class_">ValueType</span> = <span class="string">&#x27;text&#x27;</span>&gt; = &#123;</span><br><span class="line">  excludeEllipsis?: <span class="built_in">string</span>[]; <span class="comment">// 不需要折叠的数组,默认所有的都折叠 option 不折叠</span></span><br><span class="line">&#125; &amp; <span class="title class_">ProTableProps</span>&lt;<span class="title class_">DataSource</span>, U, <span class="title class_">ValueType</span>&gt;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">/****** 2. 设置默认配置    *******/</span></span><br><span class="line">  <span class="keyword">const</span> newColumns = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> <span class="attr">nc</span>: <span class="built_in">any</span> = columns?.<span class="property">map</span>?.(<span class="function"><span class="params">it</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> &#123; dataIndex = <span class="string">&#x27;&#x27;</span>, valueType = <span class="string">&#x27;&#x27;</span> &#125;: <span class="built_in">any</span> = it</span><br><span class="line">        <span class="keyword">const</span> tempIt = &#123; ...it, <span class="attr">ellipsis</span>: <span class="literal">true</span> &#125;</span><br><span class="line">        <span class="keyword">if</span> (excludeEllipsis?.<span class="property">includes</span>?.(dataIndex)) &#123;</span><br><span class="line">          tempIt.<span class="property">ellipsis</span> = <span class="literal">false</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (it?.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;ellipsis&#x27;</span>)) &#123;</span><br><span class="line">          tempIt.<span class="property">ellipsis</span> = it?.<span class="property">ellipsis</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> tempIt</span><br><span class="line">      &#125;)</span><br><span class="line">      <span class="keyword">return</span> nc</span><br><span class="line">    &#125;, [columns, excludeEllipsis])</span><br><span class="line"></span><br><span class="line">  <span class="comment">/****** 3. 传入到原有里面    *******/</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">getTableProps</span> = (<span class="params"></span>) =&gt; (&#123;</span><br><span class="line">    ...rest,</span><br><span class="line">    <span class="attr">columns</span>: newColumns,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;<span class="title class_">ProTable</span>&lt;<span class="title class_">DataType</span>, <span class="title class_">Params</span>, <span class="title class_">ValueType</span>&gt;</span><br><span class="line">      &#123;...<span class="title function_">getTableProps</span>()&#125;</span><br><span class="line">    &gt;&#123;props?.<span class="property">children</span>&#125;&lt;/<span class="title class_">ProTable</span>&gt;</span><br><span class="line">  );</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-简单配置设置表头的排序展示本地存储"><a href="#2-2-简单配置设置表头的排序展示本地存储" class="headerlink" title="2.2 简单配置设置表头的排序展示本地存储"></a>2.2 简单配置设置表头的排序展示本地存储</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1. 添加一个新传参字段 persistenceKey</span></span><br><span class="line"><span class="comment">/** ProTable 的类型定义 继承自 antd 的 Table */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">type</span> <span class="title class_">CSProTableProps</span>&lt;<span class="title class_">DataSource</span>, U, <span class="title class_">ValueType</span> = <span class="string">&#x27;text&#x27;</span>&gt; = &#123;</span><br><span class="line">  persistenceKey?: <span class="built_in">string</span>; <span class="comment">// 表头的排序持久化 key,提出来传参,实现简单调用</span></span><br><span class="line">&#125; &amp; <span class="title class_">ProTableProps</span>&lt;<span class="title class_">DataSource</span>, U, <span class="title class_">ValueType</span>&gt;;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/******** 2. 设置默认传参  *********/</span></span><br><span class="line">    <span class="keyword">const</span> newColumnsState = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">let</span> <span class="attr">ncs</span>: <span class="built_in">any</span> = &#123;</span><br><span class="line">          <span class="attr">persistenceType</span>: <span class="string">&#x27;localStorage&#x27;</span>,</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (persistenceKey &amp;&amp; !columnsState) &#123;</span><br><span class="line">          ncs.<span class="property">persistenceKey</span> = persistenceKey</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (columnsState) &#123;</span><br><span class="line">          ncs = &#123; ...ncs, columnsState &#125;</span><br><span class="line">          <span class="keyword">if</span> (!ncs?.<span class="property">persistenceKey</span> &amp;&amp; persistenceKey) &#123;</span><br><span class="line">            ncs.<span class="property">persistenceKey</span> = persistenceKey</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ncs</span><br><span class="line">      &#125;, [persistenceKey, columnsState])</span><br><span class="line"></span><br><span class="line">      <span class="comment">/****** 3. 传入到原有里面  *******/</span></span><br><span class="line">      <span class="keyword">const</span> <span class="title function_">getTableProps</span> = (<span class="params"></span>) =&gt; (&#123;</span><br><span class="line">    ...rest,</span><br><span class="line">    <span class="attr">columnsState</span>: newColumnsState,</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;<span class="title class_">ProTable</span>&lt;<span class="title class_">DataType</span>, <span class="title class_">Params</span>, <span class="title class_">ValueType</span>&gt;</span><br><span class="line">      &#123;...<span class="title function_">getTableProps</span>()&#125;</span><br><span class="line">    &gt;&#123;props?.<span class="property">children</span>&#125;&lt;/<span class="title class_">ProTable</span>&gt;</span><br><span class="line">  );</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-3-封装前后调用对比"><a href="#2-3-封装前后调用对比" class="headerlink" title="2.3 封装前后调用对比"></a>2.3 封装前后调用对比</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  <span class="keyword">const</span> columns = [</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;序号&#x27;</span>,</span><br><span class="line">    <span class="attr">valueType</span>: <span class="string">&#x27;index&#x27;</span>,</span><br><span class="line">    <span class="attr">width</span>: <span class="number">65</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">dataIndex</span>: <span class="string">&#x27;name&#x27;</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;用户名称&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">dataIndex</span>: <span class="string">&#x27;mobile&#x27;</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;联系电话&#x27;</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">dataIndex</span>: <span class="string">&#x27;type&#x27;</span>,</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;好友类型&#x27;</span>,</span><br><span class="line">    <span class="attr">hideInSearch</span>: <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">valueEnum</span>: [],</span><br><span class="line">  &#125;,</span><br><span class="line">  &#123;</span><br><span class="line">    <span class="attr">title</span>: <span class="string">&#x27;操作&#x27;</span>,</span><br><span class="line">    <span class="attr">valueType</span>: <span class="string">&#x27;option&#x27;</span>,</span><br><span class="line">    <span class="attr">width</span>: <span class="number">180</span>,</span><br><span class="line">    <span class="attr">render</span>: <span class="function">(<span class="params">_, record</span>) =&gt;</span> [<span class="language-xml"><span class="tag">&lt;<span class="name">a</span> <span class="attr">key</span>=<span class="string">&quot;manage&quot;</span> <span class="attr">onClick</span>=<span class="string">&#123;()</span> =&gt;</span> &#123;&#125;&#125;&gt;管理<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span>]</span><br><span class="line">  &#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">  &lt;<span class="title class_">ProTable</span></span><br><span class="line">    columns=&#123;columns&#125;</span><br><span class="line">    columnsState=&#123;&#123;</span><br><span class="line">      <span class="attr">persistenceType</span>: <span class="string">&#x27;localStorage&#x27;</span>,</span><br><span class="line">      <span class="attr">persistenceKey</span>: <span class="string">&#x27;persistenceKey&#x27;</span></span><br><span class="line">      &#125;&#125;</span><br><span class="line">    rowKey=<span class="string">&quot;id&quot;</span></span><br><span class="line">    scroll=&#123;&#123; <span class="attr">x</span>: <span class="number">800</span> &#125;&#125;</span><br><span class="line">    actionRef=&#123;actionRef&#125;</span><br><span class="line">    request=&#123;getContactListApi&#125;</span><br><span class="line">  /&gt;</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">CSProTable</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">persistenceKey</span>=<span class="string">&quot;persistenceKey&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">columns</span>=<span class="string">&#123;columns&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">rowKey</span>=<span class="string">&quot;id&quot;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">scroll</span>=<span class="string">&#123;&#123;</span> <span class="attr">x:</span> <span class="attr">800</span> &#125;&#125;</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">actionRef</span>=<span class="string">&#123;actionRef&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">request</span>=<span class="string">&#123;getContactListApi&#125;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">  /&gt;</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>两者调用基本差不多,设置标题持久化 <code>CSProTable</code> 的配置会简单些,还有他会默认对单行文本过长折叠</p>
+<h2 id="3-完整封装代码"><a href="#3-完整封装代码" class="headerlink" title="3. 完整封装代码"></a>3. 完整封装代码</h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * @Description:  CSProTable,对原有的做一些定制化的东西,方便调用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">type</span> &#123; <span class="title class_">ParamsType</span>, <span class="title class_">ProTableProps</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@ant-design/pro-components&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">ProTable</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;@ant-design/pro-components&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; <span class="title class_">Icon</span> &#125; <span class="keyword">from</span> <span class="string">&#x27;antd&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; isBoolean &#125; <span class="keyword">from</span> <span class="string">&#x27;lodash&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> <span class="title class_">React</span>, &#123; <span class="title class_">ReactNode</span>, useMemo &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** ProTable 的类型定义 继承自 antd 的 Table */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">declare</span> <span class="keyword">type</span> <span class="title class_">CSProTableProps</span>&lt;<span class="title class_">DataSource</span>, U, <span class="title class_">ValueType</span> = <span class="string">&#x27;text&#x27;</span>&gt; = &#123;</span><br><span class="line">  searchTitle?: <span class="built_in">string</span> | <span class="title class_">ReactNode</span>; <span class="comment">// 搜索标题</span></span><br><span class="line">  excludeEllipsis?: <span class="built_in">string</span>[]; <span class="comment">// 不需要折叠的数组,默认所有的都折叠 option 不折叠</span></span><br><span class="line">  persistenceKey?: <span class="built_in">string</span>; <span class="comment">// 表格列表持久化 key,提前出来传参</span></span><br><span class="line">&#125; &amp; <span class="title class_">ProTableProps</span>&lt;<span class="title class_">DataSource</span>, U, <span class="title class_">ValueType</span>&gt;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="title class_">CSProTable</span> = &lt;</span><br><span class="line">  <span class="title class_">DataType</span> <span class="keyword">extends</span> <span class="title class_">Record</span>&lt;<span class="built_in">string</span>, <span class="built_in">any</span>&gt;,</span><br><span class="line">  <span class="title class_">Params</span> <span class="keyword">extends</span> <span class="title class_">ParamsType</span> = <span class="title class_">ParamsType</span>,</span><br><span class="line">  <span class="title class_">ValueType</span> = <span class="string">&#x27;text&#x27;</span>,</span><br><span class="line">&gt;<span class="function">(<span class="params"></span></span></span><br><span class="line"><span class="params"><span class="function">  props: CSProTableProps&lt;DataType, Params, ValueType&gt;</span></span></span><br><span class="line"><span class="params"><span class="function"></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123;</span><br><span class="line">    searchTitle,</span><br><span class="line">    excludeEllipsis = [],</span><br><span class="line">    columns = [],</span><br><span class="line">    pagination = &#123;&#125;,</span><br><span class="line">    search,</span><br><span class="line">    scroll = &#123;&#125;,</span><br><span class="line">    searchFormRender,</span><br><span class="line">    persistenceKey,</span><br><span class="line">    columnsState,</span><br><span class="line">    options,</span><br><span class="line">    cardBordered = <span class="literal">true</span>,</span><br><span class="line">    bordered = <span class="literal">true</span>,</span><br><span class="line">    ...rest &#125; = props</span><br><span class="line">  <span class="keyword">const</span> newColumns = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="attr">nc</span>: <span class="built_in">any</span> = columns?.<span class="property">map</span>?.(<span class="function"><span class="params">it</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; dataIndex = <span class="string">&#x27;&#x27;</span>, valueType = <span class="string">&#x27;&#x27;</span> &#125;: <span class="built_in">any</span> = it</span><br><span class="line">      <span class="keyword">const</span> tempIt = &#123; ...it, <span class="attr">ellipsis</span>: <span class="literal">true</span> &#125;</span><br><span class="line">      <span class="keyword">if</span> (excludeEllipsis?.<span class="property">includes</span>?.(dataIndex)) &#123;</span><br><span class="line">        tempIt.<span class="property">ellipsis</span> = <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (it?.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;ellipsis&#x27;</span>)) &#123;</span><br><span class="line">        tempIt.<span class="property">ellipsis</span> = it?.<span class="property">ellipsis</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (it?.<span class="title function_">hasOwnProperty</span>(<span class="string">&#x27;valueEnum&#x27;</span>) || valueType === <span class="string">&#x27;select&#x27;</span>) &#123;</span><br><span class="line">        tempIt.<span class="property">fieldProps</span> = &#123; <span class="attr">showSearch</span>: <span class="literal">true</span>, ...tempIt?.<span class="property">fieldProps</span> &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (dataIndex === <span class="string">&#x27;option&#x27;</span> || valueType === <span class="string">&#x27;option&#x27;</span>) &#123;</span><br><span class="line">        tempIt.<span class="property">fixed</span> = <span class="string">&#x27;right&#x27;</span></span><br><span class="line">        tempIt.<span class="property">hideInSetting</span> = <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (dataIndex === <span class="string">&#x27;index&#x27;</span> || valueType === <span class="string">&#x27;index&#x27;</span>) &#123;</span><br><span class="line">        tempIt.<span class="property">fixed</span> = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (dataIndex === <span class="string">&#x27;indexBorder&#x27;</span> || valueType === <span class="string">&#x27;indexBorder&#x27;</span>) &#123;</span><br><span class="line">        tempIt.<span class="property">fixed</span> = <span class="string">&#x27;left&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> tempIt</span><br><span class="line">    &#125;)</span><br><span class="line">    <span class="keyword">return</span> nc</span><br><span class="line">  &#125;, [columns, excludeEllipsis])</span><br><span class="line">  <span class="keyword">const</span> newOptions = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> no = &#123;&#125;</span><br><span class="line">    <span class="keyword">if</span> (options) &#123;</span><br><span class="line">      no = options</span><br><span class="line">      <span class="keyword">if</span> (!options?.<span class="property">hasOwnProperty</span>?.(<span class="string">&#x27;reloadIcon&#x27;</span>)) &#123;</span><br><span class="line">        no = &#123; ...no, <span class="attr">reloadIcon</span>: <span class="language-xml"><span class="tag">&lt;<span class="name">Icon</span> <span class="attr">type</span>=<span class="string">&quot;icon-shuaxin&quot;</span> /&gt;</span></span> &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (!options?.<span class="property">hasOwnProperty</span>?.(<span class="string">&#x27;density&#x27;</span>)) &#123;</span><br><span class="line">        no = &#123; ...no, <span class="attr">density</span>: <span class="literal">false</span> &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (!options?.<span class="property">hasOwnProperty</span>?.(<span class="string">&#x27;setting&#x27;</span>)) &#123;</span><br><span class="line">        <span class="keyword">let</span> setting = options?.<span class="property">setting</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="title function_">isBoolean</span>(setting)) &#123;</span><br><span class="line">          no = &#123; ...no, setting &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="keyword">if</span> (!setting?.<span class="property">hasOwnProperty</span>?.(<span class="string">&#x27;settingIcon&#x27;</span>)) &#123;</span><br><span class="line">            setting = &#123; ...setting, <span class="attr">settingIcon</span>: <span class="language-xml"><span class="tag">&lt;<span class="name">CFIcon</span> <span class="attr">type</span>=<span class="string">&quot;icon-shezhi&quot;</span> /&gt;</span></span> &#125;</span><br><span class="line">          &#125;</span><br><span class="line">          no = &#123; ...no, setting &#125;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="title function_">isBoolean</span>(options)) &#123;</span><br><span class="line">      no = options</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      no = &#123;</span><br><span class="line">        <span class="attr">setting</span>: &#123;</span><br><span class="line">          <span class="attr">draggable</span>: <span class="literal">true</span>,</span><br><span class="line">          <span class="attr">settingIcon</span>: <span class="language-xml"><span class="tag">&lt;<span class="name">Icon</span> <span class="attr">type</span>=<span class="string">&quot;icon-shezhi&quot;</span> /&gt;</span></span></span><br><span class="line">        &#125;,</span><br><span class="line">        <span class="attr">reloadIcon</span>: <span class="language-xml"><span class="tag">&lt;<span class="name">Icon</span> <span class="attr">type</span>=<span class="string">&quot;icon-shuaxin&quot;</span> /&gt;</span></span>,</span><br><span class="line">        <span class="attr">density</span>: <span class="literal">false</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> no</span><br><span class="line">  &#125;, [])</span><br><span class="line">  <span class="keyword">const</span> newPagination = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> np = &#123;&#125;</span><br><span class="line">    <span class="keyword">if</span> (pagination) &#123;</span><br><span class="line">      np = pagination</span><br><span class="line">      <span class="keyword">if</span> (!pagination?.<span class="property">hasOwnProperty</span>?.(<span class="string">&#x27;showSizeChanger&#x27;</span>)) &#123;</span><br><span class="line">        np = &#123; ...np, <span class="attr">showSizeChanger</span>: <span class="literal">true</span> &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">if</span> (!pagination?.<span class="property">hasOwnProperty</span>?.(<span class="string">&#x27;showQuickJumper&#x27;</span>)) &#123;</span><br><span class="line">        np = &#123; ...np, <span class="attr">showQuickJumper</span>: <span class="literal">true</span> &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (<span class="title function_">isBoolean</span>(pagination)) &#123;</span><br><span class="line">      np = options</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      np = &#123;</span><br><span class="line">        <span class="attr">showSizeChanger</span>: <span class="literal">true</span>,</span><br><span class="line">        <span class="attr">showQuickJumper</span>: <span class="literal">true</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> np</span><br><span class="line">  &#125;, [])</span><br><span class="line">  <span class="keyword">const</span> newColumnsState = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="attr">ncs</span>: <span class="built_in">any</span> = &#123;</span><br><span class="line">      <span class="attr">persistenceType</span>: <span class="string">&#x27;localStorage&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (persistenceKey &amp;&amp; !columnsState) &#123;</span><br><span class="line">      ncs.<span class="property">persistenceKey</span> = persistenceKey</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (columnsState) &#123;</span><br><span class="line">      ncs = &#123; ...ncs, columnsState &#125;</span><br><span class="line">      <span class="keyword">if</span> (!ncs?.<span class="property">persistenceKey</span> &amp;&amp; persistenceKey) &#123;</span><br><span class="line">        ncs.<span class="property">persistenceKey</span> = persistenceKey</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ncs</span><br><span class="line">  &#125;, [persistenceKey, columnsState])</span><br><span class="line">  <span class="keyword">const</span> newSearch = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">let</span> <span class="attr">ns</span>: <span class="built_in">any</span> = &#123;</span><br><span class="line">      <span class="attr">span</span>: &#123;</span><br><span class="line">        <span class="attr">xs</span>: <span class="number">24</span>,</span><br><span class="line">        <span class="attr">sm</span>: <span class="number">24</span>,</span><br><span class="line">        <span class="attr">md</span>: <span class="number">12</span>,</span><br><span class="line">        <span class="attr">lg</span>: <span class="number">8</span>,</span><br><span class="line">        <span class="attr">xl</span>: <span class="number">6</span>,</span><br><span class="line">        <span class="attr">xxl</span>: <span class="number">6</span>,</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="title function_">isBoolean</span>(search)) &#123;</span><br><span class="line">      ns = search</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      ns = &#123; ...ns, ...search &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> ns</span><br><span class="line">  &#125;, [search])</span><br><span class="line">  <span class="keyword">const</span> newScroll = <span class="title function_">useMemo</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123; <span class="attr">x</span>: <span class="number">1300</span>, ...scroll &#125;</span><br><span class="line">  &#125;, [scroll])</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">newSearchFormRender</span> = (<span class="params">props, defaultDom</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="language-xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line"><span class="language-xml">      &#123;searchTitle &amp;&amp; <span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;searchTitle absolute text-base z-50 font-medium text-[#333]&#x27;</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">top:</span> &#x27;<span class="attr">40px</span>&#x27;, <span class="attr">left:</span> &#x27;<span class="attr">44px</span>&#x27; &#125;&#125;&gt;</span>&#123;searchTitle&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span>&#125;</span></span><br><span class="line"><span class="language-xml">      &#123;defaultDom&#125;</span></span><br><span class="line"><span class="language-xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">const</span> <span class="title function_">getTableProps</span> = (<span class="params"></span>) =&gt; (&#123;</span><br><span class="line">    ...rest,</span><br><span class="line">    cardBordered,</span><br><span class="line">    bordered,</span><br><span class="line">    <span class="attr">columnsState</span>: newColumnsState,</span><br><span class="line">    <span class="attr">search</span>: newSearch,</span><br><span class="line">    <span class="attr">scroll</span>: newScroll,</span><br><span class="line">    <span class="attr">pagination</span>: newPagination,</span><br><span class="line">    <span class="attr">columns</span>: newColumns,</span><br><span class="line">    <span class="attr">options</span>: newOptions,</span><br><span class="line">    <span class="attr">searchFormRender</span>: searchFormRender ? searchFormRender : newSearchFormRender</span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;<span class="title class_">ProTable</span>&lt;<span class="title class_">DataType</span>, <span class="title class_">Params</span>, <span class="title class_">ValueType</span>&gt;</span><br><span class="line">      &#123;...<span class="title function_">getTableProps</span>()&#125;</span><br><span class="line">    &gt;&#123;props?.<span class="property">children</span>&#125;&lt;/<span class="title class_">ProTable</span>&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> &#123; <span class="title class_">CSProTable</span> &#125;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="4-参考引用"><a href="#4-参考引用" class="headerlink" title="4. 参考引用"></a>4. 参考引用</h2><p><span class="exturl" data-url="aHR0cHM6Ly9wcm8tY29tcG9uZW50cy5hbnRkaWdpdGFsLmRldi9jb21wb25lbnRzL3RhYmxlP2N1cnJlbnQ9MSZwYWdlU2l6ZT01I2NvbHVtbnMtJUU1JTg4JTk3JUU1JUFFJTlBJUU0JUI5JTg5">Pro-Components 组件 ProTable 文档<i class="fa fa-external-link-alt"></i></span></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/04/13/gitlab.yml%20%E9%80%9A%E8%BF%87%E4%BB%93%E5%BA%93%E7%BB%9F%E4%B8%80%E9%85%8D%E7%BD%AE/" rel="prev" title=".gitlab.yml通过仓库统一配置">
+                  <i class="fa fa-angle-left"></i> .gitlab.yml通过仓库统一配置
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2023/10/14/%E5%91%BD%E4%BB%A4%E5%BC%8F%E6%89%93%E5%BC%80%E5%BC%B9%E7%AA%97%E8%AE%BE%E8%AE%A1/" rel="next" title="命令式打开弹窗设计">
+                  命令式打开弹窗设计 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">FerryVip</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js","integrity":"sha256-9y71g5Lz/KLsHjB8uXwnkuWDtAMDSzD/HdIbqhJfTAI="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

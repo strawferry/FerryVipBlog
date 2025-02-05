@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"strawferry.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"show_result":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="组件的详细说明和生命周期（Component Specs and Lifecycle） Mounting Cycle 挂载循环周期  constructor(object props)   121. object getIniitialState() &#x2F;&#x2F;它的返回值会成为this.state的初始值2. object getDefaultProps() &#x2F;&#x2F;它的返回值会成为this.props的初">
+<meta property="og:type" content="article">
+<meta property="og:title" content="React 组件的生命周期">
+<meta property="og:url" content="https://strawferry.github.io/2016/06/10/React%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/index.html">
+<meta property="og:site_name" content="FerryVip&#39;s Blog">
+<meta property="og:description" content="组件的详细说明和生命周期（Component Specs and Lifecycle） Mounting Cycle 挂载循环周期  constructor(object props)   121. object getIniitialState() &#x2F;&#x2F;它的返回值会成为this.state的初始值2. object getDefaultProps() &#x2F;&#x2F;它的返回值会成为this.props的初">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2016-06-10T07:22:51.000Z">
+<meta property="article:modified_time" content="2023-08-20T01:56:56.000Z">
+<meta property="article:author" content="FerryVip">
+<meta property="article:tag" content="前端,分享,博客,前端开发,前端技术">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://strawferry.github.io/2016/06/10/React%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://strawferry.github.io/2016/06/10/React%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/","path":"2016/06/10/React组件的生命周期/","title":"React 组件的生命周期"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>React 组件的生命周期 | FerryVip's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88853535-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-88853535-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kt6ijw4ygg");
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FerryVip's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术分享</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">40</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6%E7%9A%84%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E%E5%92%8C%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F%EF%BC%88Component-Specs-and-Lifecycle%EF%BC%89"><span class="nav-number">1.</span> <span class="nav-text">组件的详细说明和生命周期（Component Specs and Lifecycle）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Mounting-Cycle-%E6%8C%82%E8%BD%BD%E5%BE%AA%E7%8E%AF%E5%91%A8%E6%9C%9F"><span class="nav-number">1.1.</span> <span class="nav-text">Mounting Cycle 挂载循环周期</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Updating-Cycle-%E7%BB%84%E4%BB%B6%E6%9B%B4%E6%96%B0%E5%BE%AA%E7%8E%AF%E5%91%A8%E6%9C%9F"><span class="nav-number">1.2.</span> <span class="nav-text">Updating Cycle 组件更新循环周期</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E6%8C%82%E8%BD%BD%EF%BC%9A-componentWillMount"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.挂载： componentWillMount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E6%8C%82%E8%BD%BD%EF%BC%9A-componentDidMount"><span class="nav-number">1.2.2.</span> <span class="nav-text">2.挂载： componentDidMount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E6%9B%B4%E6%96%B0%EF%BC%9A-componentWillReceiveProps"><span class="nav-number">1.2.3.</span> <span class="nav-text">3.更新： componentWillReceiveProps</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E6%9B%B4%E6%96%B0%EF%BC%9A-shouldComponentUpdate"><span class="nav-number">1.2.4.</span> <span class="nav-text">4.更新： shouldComponentUpdate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E6%9B%B4%E6%96%B0%EF%BC%9A-componentWillUpdate"><span class="nav-number">1.2.5.</span> <span class="nav-text">5.更新： componentWillUpdate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E7%A7%BB%E9%99%A4%EF%BC%9A-componentWillUnmount"><span class="nav-number">1.2.6.</span> <span class="nav-text">6.移除： componentWillUnmount</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%8C%82%E8%BD%BD%EF%BC%9A-componentWillMount-1"><span class="nav-number">1.3.</span> <span class="nav-text">1.挂载： componentWillMount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E6%8C%82%E8%BD%BD%EF%BC%9A-componentDidMount-1"><span class="nav-number">1.4.</span> <span class="nav-text">2.挂载： componentDidMount</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%9B%B4%E6%96%B0%EF%BC%9A-componentWillReceiveProps-1"><span class="nav-number">1.5.</span> <span class="nav-text">3.更新： componentWillReceiveProps</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E6%9B%B4%E6%96%B0%EF%BC%9A-shouldComponentUpdate-1"><span class="nav-number">1.6.</span> <span class="nav-text">4.更新： shouldComponentUpdate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%9B%B4%E6%96%B0%EF%BC%9A-componentWillUpdate-1"><span class="nav-number">1.7.</span> <span class="nav-text">5.更新： componentWillUpdate</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E7%A7%BB%E9%99%A4%EF%BC%9A-componentWillUnmount-1"><span class="nav-number">1.8.</span> <span class="nav-text">6.移除： componentWillUnmount</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FerryVip"
+      src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+  <p class="site-author-name" itemprop="name">FerryVip</p>
+  <div class="site-description" itemprop="description">好好过一生</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0cmF3ZmVycnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;strawferry"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly94aWFvaG9uZ3NodXNoYXJlLm9ubGluZQ==" title="Share工具 → https:&#x2F;&#x2F;xiaohongshushare.online"><i class="fa fa-link fa-fw"></i>Share工具</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://strawferry.github.io/2016/06/10/React%E7%BB%84%E4%BB%B6%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+      <meta itemprop="name" content="FerryVip">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FerryVip's Blog">
+      <meta itemprop="description" content="好好过一生">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="React 组件的生命周期 | FerryVip's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          React 组件的生命周期
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-06-10 15:22:51" itemprop="dateCreated datePublished" datetime="2016-06-10T15:22:51+08:00">2016-06-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-20 09:56:56" itemprop="dateModified" datetime="2023-08-20T09:56:56+08:00">2023-08-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="组件的详细说明和生命周期（Component-Specs-and-Lifecycle）"><a href="#组件的详细说明和生命周期（Component-Specs-and-Lifecycle）" class="headerlink" title="组件的详细说明和生命周期（Component Specs and Lifecycle）"></a><span class="exturl" data-url="aHR0cDovL3JlYWN0anMuY24vcmVhY3QvZG9jcy9jb21wb25lbnQtc3BlY3MuaHRtbA==">组件的详细说明和生命周期（Component Specs and Lifecycle）<i class="fa fa-external-link-alt"></i></span></h2><hr>
+<h3 id="Mounting-Cycle-挂载循环周期"><a href="#Mounting-Cycle-挂载循环周期" class="headerlink" title="Mounting Cycle 挂载循环周期"></a>Mounting Cycle 挂载循环周期</h3><blockquote>
+<ol>
+<li>constructor(object props)</li>
+</ol>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1. object getIniitialState() //它的返回值会成为this.state的初始值</span><br><span class="line">2. object getDefaultProps() //它的返回值会成为this.props的初始值</span><br></pre></td></tr></table></figure>
+<blockquote>
+<ol start="2">
+<li>componentWillMount()&#x2F;&#x2F;本地读取数据用于显示,进行读取的好时机</li>
+<li>render() -&gt; React Element</li>
+<li>componentDidMount()&#x2F;&#x2F;获取网络数据比较好的选择</li>
+</ol>
+</blockquote>
+<h3 id="Updating-Cycle-组件更新循环周期"><a href="#Updating-Cycle-组件更新循环周期" class="headerlink" title="Updating Cycle 组件更新循环周期"></a>Updating Cycle 组件更新循环周期</h3><blockquote>
+<ol>
+<li>componentWillReceiveProps(object nextProps)</li>
+<li>shouldComponentUpdate(object nextProps, object nextState) -&gt; boolean</li>
+<li>componentWillUpdate(object nextProps, object nextState)</li>
+<li>render() -&gt; React Element</li>
+<li>componentDidUpdate(object prevProps, object prevState)</li>
+</ol>
+</blockquote>
+<h4 id="1-挂载：-componentWillMount"><a href="#1-挂载：-componentWillMount" class="headerlink" title="1.挂载： componentWillMount"></a>1.挂载： componentWillMount</h4><h4 id="2-挂载：-componentDidMount"><a href="#2-挂载：-componentDidMount" class="headerlink" title="2.挂载： componentDidMount"></a>2.挂载： componentDidMount</h4><h4 id="3-更新：-componentWillReceiveProps"><a href="#3-更新：-componentWillReceiveProps" class="headerlink" title="3.更新： componentWillReceiveProps"></a>3.更新： componentWillReceiveProps</h4><blockquote>
+<p>componentWillReceiveProps(object nextProps)</p>
+</blockquote>
+<h4 id="4-更新：-shouldComponentUpdate"><a href="#4-更新：-shouldComponentUpdate" class="headerlink" title="4.更新： shouldComponentUpdate"></a>4.更新： shouldComponentUpdate</h4><blockquote>
+<p>boolean shouldComponentUpdate(object nextProps, object nextState)</p>
+</blockquote>
+<h4 id="5-更新：-componentWillUpdate"><a href="#5-更新：-componentWillUpdate" class="headerlink" title="5.更新： componentWillUpdate"></a>5.更新： componentWillUpdate</h4><blockquote>
+<p>componentWillUpdate(object nextProps, object nextState)</p>
+</blockquote>
+<h4 id="6-移除：-componentWillUnmount"><a href="#6-移除：-componentWillUnmount" class="headerlink" title="6.移除： componentWillUnmount"></a>6.移除： componentWillUnmount</h4><hr>
+<h3 id="1-挂载：-componentWillMount-1"><a href="#1-挂载：-componentWillMount-1" class="headerlink" title="1.挂载： componentWillMount"></a>1.挂载： componentWillMount</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">componentWillMount</span>()</span><br></pre></td></tr></table></figure>
+
+<p>服务器端和客户端都只调用一次，在初始化渲染执行之前立刻调用。如果在这个方法内调用 setState，render() 将会感知到更新后的 state，将会执行仅一次，尽管 state 改变了。</p>
+<h3 id="2-挂载：-componentDidMount-1"><a href="#2-挂载：-componentDidMount-1" class="headerlink" title="2.挂载： componentDidMount"></a>2.挂载： componentDidMount</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">componentDidMount</span>()</span><br></pre></td></tr></table></figure>
+
+<p>在初始化渲染执行之后立刻调用一次，仅客户端有效（服务器端不会调用）。在生命周期中的这个时间点，组件拥有一个 DOM 展现，你可以通过 this.getDOMNode() 来获取相应 DOM 节点。<br>如果想和其它 JavaScript 框架集成，使用 setTimeout 或者 setInterval 来设置定时器，或者发送 AJAX 请求，可以在该方法中执行这些操作。</p>
+<h3 id="3-更新：-componentWillReceiveProps-1"><a href="#3-更新：-componentWillReceiveProps-1" class="headerlink" title="3.更新： componentWillReceiveProps"></a>3.更新： componentWillReceiveProps</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">componentWillReceiveProps</span>(object nextProps)</span><br></pre></td></tr></table></figure>
+
+<p>在组件接收到新的 props 的时候调用。在初始化渲染的时候，该方法不会调用。<br>用此函数可以作为 react 在 prop 传入之后， render() 渲染之前更新 state 的机会。老的 props 可以通过 this.props 获取到。在该函数中调用 this.setState() 将不会引起第二次渲染。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">componentWillReceiveProps</span>: <span class="keyword">function</span>(<span class="params">nextProps</span>) &#123;</span><br><span class="line">        <span class="variable language_">this</span>.<span class="title function_">setState</span>(&#123;</span><br><span class="line">          <span class="attr">likesIncreasing</span>: nextProps.<span class="property">likeCount</span> &gt; <span class="variable language_">this</span>.<span class="property">props</span>.<span class="property">likeCount</span></span><br><span class="line">     &#125;);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-更新：-shouldComponentUpdate-1"><a href="#4-更新：-shouldComponentUpdate-1" class="headerlink" title="4.更新： shouldComponentUpdate"></a>4.更新： shouldComponentUpdate</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">boolean <span class="title function_">shouldComponentUpdate</span>(object nextProps, object nextState)</span><br></pre></td></tr></table></figure>
+
+<p>在接收到新的 props 或者 state，将要渲染之前调用。该方法在初始化渲染的时候不会调用，在使用 forceUpdate 方法的时候也不会。<br>如果确定新的 props 和 state 不会导致组件更新，则此处应该 返回 false。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">shouldComponentUpdate</span>: <span class="keyword">function</span>(<span class="params">nextProps, nextState</span>) &#123;</span><br><span class="line">  <span class="keyword">return</span> nextProps.<span class="property">id</span> !== <span class="variable language_">this</span>.<span class="property">props</span>.<span class="property">id</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果 shouldComponentUpdate 返回 false，则 render() 将不会执行，直到下一次 state 改变。（另外，componentWillUpdate 和 componentDidUpdate 也不会被调用。）<br>默认情况下，shouldComponentUpdate 总会返回 true，在 state 改变的时候避免细微的 bug，但是如果总是小心地把 state 当做不可变的，在 render() 中只从 props 和 state 读取值，此时你可以覆盖 shouldComponentUpdate 方法，实现新老 props 和 state 的比对逻辑。<br>如果性能是个瓶颈，尤其是有几十个甚至上百个组件的时候，使用 shouldComponentUpdate 可以提升应用的性能。</p>
+<h3 id="5-更新：-componentWillUpdate-1"><a href="#5-更新：-componentWillUpdate-1" class="headerlink" title="5.更新： componentWillUpdate"></a>5.更新： componentWillUpdate</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">componentWillUpdate</span>(object nextProps, object nextState)</span><br></pre></td></tr></table></figure>
+<p>在接收到新的 props 或者 state 之前立刻调用。在初始化渲染的时候该方法不会被调用。<br>使用该方法做一些更新之前的准备工作。</p>
+<h3 id="6-移除：-componentWillUnmount-1"><a href="#6-移除：-componentWillUnmount-1" class="headerlink" title="6.移除： componentWillUnmount"></a>6.移除： componentWillUnmount</h3><figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="title function_">componentWillUnmount</span>()</span><br></pre></td></tr></table></figure>
+<p>在组件从 DOM 中移除的时候立刻被调用。<br>在该方法中执行任何必要的清理，比如无效的定时器，或者清除在 componentDidMount 中创建的 DOM 元素。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/04/12/Hexo%20%E5%8D%9A%E5%AE%A2%E7%9A%84%E5%AE%89%E8%A3%85%E6%B5%81%E7%A8%8B/" rel="prev" title="折腾Hexo">
+                  <i class="fa fa-angle-left"></i> 折腾Hexo
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/06/15/ReactNative%20style%E6%A0%B7%E5%BC%8F%E4%B9%8BFlexbox%E5%B8%83%E5%B1%80%E6%A0%B7%E5%BC%8F/" rel="next" title="ReactNative style样式之Flexbox布局样式">
+                  ReactNative style样式之Flexbox布局样式 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">FerryVip</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js","integrity":"sha256-9y71g5Lz/KLsHjB8uXwnkuWDtAMDSzD/HdIbqhJfTAI="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"strawferry.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"show_result":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="利用 App Center 来打包你的应用App Center 是巨硬(微软)家的一个应用开发管理平台服务,之前主要使用的是他的 CodePush 服务,后续平台升级了,把开发的崩溃收集,数据统计,推送服务,应用构建及测试,CodePush 等多个服务融合在一起,做出的 App Center 平台,基本功能也都是免费的,今天这篇文章主要是讲 iOS (原生和 ReactNative)应用通过 Ap">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用 App Center 来打包你的应用">
+<meta property="og:url" content="https://strawferry.github.io/2019/05/07/%E5%88%A9%E7%94%A8%20App%20Center%20%E6%9D%A5%E6%89%93%E5%8C%85%E4%BD%A0%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="FerryVip&#39;s Blog">
+<meta property="og:description" content="利用 App Center 来打包你的应用App Center 是巨硬(微软)家的一个应用开发管理平台服务,之前主要使用的是他的 CodePush 服务,后续平台升级了,把开发的崩溃收集,数据统计,推送服务,应用构建及测试,CodePush 等多个服务融合在一起,做出的 App Center 平台,基本功能也都是免费的,今天这篇文章主要是讲 iOS (原生和 ReactNative)应用通过 Ap">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sptw03wnj220k0y00xn.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1g2spvcr5lgj221e11eq9v.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sq5x2f1vj222a116dmg.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sq7ty51vj2226114wlv.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sq9bl4vpj223u0ys43f.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sqc4f8bbj223g2b4kaa.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sr1apnj3j221019ggsk.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sraxze93j221s1a2k4v.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1g2st0ejwiqj216s0o8adx.jpg">
+<meta property="article:published_time" content="2019-05-07T08:26:34.000Z">
+<meta property="article:modified_time" content="2023-08-20T01:56:56.000Z">
+<meta property="article:author" content="FerryVip">
+<meta property="article:tag" content="前端,分享,博客,前端开发,前端技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sptw03wnj220k0y00xn.jpg">
+
+
+<link rel="canonical" href="https://strawferry.github.io/2019/05/07/%E5%88%A9%E7%94%A8%20App%20Center%20%E6%9D%A5%E6%89%93%E5%8C%85%E4%BD%A0%E7%9A%84%E5%BA%94%E7%94%A8/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://strawferry.github.io/2019/05/07/%E5%88%A9%E7%94%A8%20App%20Center%20%E6%9D%A5%E6%89%93%E5%8C%85%E4%BD%A0%E7%9A%84%E5%BA%94%E7%94%A8/","path":"2019/05/07/利用 App Center 来打包你的应用/","title":"利用 App Center 来打包你的应用"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>利用 App Center 来打包你的应用 | FerryVip's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88853535-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-88853535-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kt6ijw4ygg");
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FerryVip's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术分享</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">40</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%A9%E7%94%A8-App-Center-%E6%9D%A5%E6%89%93%E5%8C%85%E4%BD%A0%E7%9A%84%E5%BA%94%E7%94%A8"><span class="nav-number">1.</span> <span class="nav-text">利用 App Center 来打包你的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0-%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-number">1.1.</span> <span class="nav-text">0. 前期准备</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E8%AE%BE%E7%BD%AE-Build-%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.</span> <span class="nav-text">1. 设置 Build 配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E4%BB%AA%E8%A1%A8%E7%9B%98%E7%82%B9%E5%87%BB%E5%88%9B%E5%BB%BA%E5%BA%94%E7%94%A8"><span class="nav-number">1.2.1.</span> <span class="nav-text">1.1 仪表盘点击创建应用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E5%A1%AB%E5%86%99%E5%BA%94%E7%94%A8%E4%BF%A1%E6%81%AF"><span class="nav-number">1.2.2.</span> <span class="nav-text">1.2 填写应用信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E6%B7%BB%E5%8A%A0%E6%9E%84%E5%BB%BA%E4%BB%93%E5%BA%93"><span class="nav-number">1.2.3.</span> <span class="nav-text">1.3 添加构建仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-4-%E5%88%86%E6%94%AF%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.4.</span> <span class="nav-text">1.4 分支构建配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-5-%E6%9E%84%E5%BB%BA%E9%85%8D%E7%BD%AE"><span class="nav-number">1.2.5.</span> <span class="nav-text">1.5 构建配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-6-%E5%88%86%E6%94%AF%E6%9E%84%E5%BB%BA%E5%8E%86%E5%8F%B2"><span class="nav-number">1.2.6.</span> <span class="nav-text">1.6 分支构建历史</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-7-%E6%9E%84%E5%BB%BA%E4%BA%A7%E7%89%A9"><span class="nav-number">1.2.7.</span> <span class="nav-text">1.7 构建产物</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">2. 总结</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FerryVip"
+      src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+  <p class="site-author-name" itemprop="name">FerryVip</p>
+  <div class="site-description" itemprop="description">好好过一生</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0cmF3ZmVycnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;strawferry"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly94aWFvaG9uZ3NodXNoYXJlLm9ubGluZQ==" title="Share工具 → https:&#x2F;&#x2F;xiaohongshushare.online"><i class="fa fa-link fa-fw"></i>Share工具</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://strawferry.github.io/2019/05/07/%E5%88%A9%E7%94%A8%20App%20Center%20%E6%9D%A5%E6%89%93%E5%8C%85%E4%BD%A0%E7%9A%84%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+      <meta itemprop="name" content="FerryVip">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FerryVip's Blog">
+      <meta itemprop="description" content="好好过一生">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="利用 App Center 来打包你的应用 | FerryVip's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          利用 App Center 来打包你的应用
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-05-07 16:26:34" itemprop="dateCreated datePublished" datetime="2019-05-07T16:26:34+08:00">2019-05-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-20 09:56:56" itemprop="dateModified" datetime="2023-08-20T09:56:56+08:00">2023-08-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="利用-App-Center-来打包你的应用"><a href="#利用-App-Center-来打包你的应用" class="headerlink" title="利用 App Center 来打包你的应用"></a>利用 App Center 来打包你的应用</h1><p>App Center 是巨硬(微软)家的一个应用开发管理平台服务,之前主要使用的是他的 CodePush 服务,后续平台升级了,把开发的崩溃收集,数据统计,推送服务,应用构建及测试,CodePush 等多个服务融合在一起,做出的 App Center 平台,基本功能也都是免费的,今天这篇文章主要是讲 iOS (原生和 ReactNative)应用通过 App Center 来打包;</p>
+<h2 id="0-前期准备"><a href="#0-前期准备" class="headerlink" title="0. 前期准备"></a>0. 前期准备</h2><ol>
+<li>App Center 账号(可通过 GitHub 账号授权登录) <span class="exturl" data-url="aHR0cHM6Ly9hcHBjZW50ZXIubXMv">https://appcenter.ms<i class="fa fa-external-link-alt"></i></span>;</li>
+<li>GitHub 账号 <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tLw==">https://github.com/<i class="fa fa-external-link-alt"></i></span>;</li>
+</ol>
+<h2 id="1-设置-Build-配置"><a href="#1-设置-Build-配置" class="headerlink" title="1. 设置 Build 配置"></a>1. 设置 Build 配置</h2><h3 id="1-1-仪表盘点击创建应用"><a href="#1-1-仪表盘点击创建应用" class="headerlink" title="1.1 仪表盘点击创建应用"></a>1.1 仪表盘点击创建应用</h3><p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sptw03wnj220k0y00xn.jpg"></p>
+<h3 id="1-2-填写应用信息"><a href="#1-2-填写应用信息" class="headerlink" title="1.2 填写应用信息"></a>1.2 填写应用信息</h3><blockquote>
+<ol>
+<li>填写应用基础信息  –&gt; 应用名称 –&gt; Release type</li>
+<li>App Center 可以用来构建多种系统平台的应用,以及不同平台写的应用</li>
+<li>这边我们 OS 选取 iOS , Platform 选 Objective-C &#x2F; Swift</li>
+</ol>
+</blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1g2spvcr5lgj221e11eq9v.jpg"></p>
+<h3 id="1-3-添加构建仓库"><a href="#1-3-添加构建仓库" class="headerlink" title="1.3 添加构建仓库"></a>1.3 添加构建仓库</h3><blockquote>
+<p>点击构建配置,连接仓库,选取 GitHub 仓库</p>
+</blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sq5x2f1vj222a116dmg.jpg"></p>
+<blockquote>
+<p>通过关联的 GitHub 账号,选取相应的 iOS 仓库</p>
+</blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sq7ty51vj2226114wlv.jpg"></p>
+<h3 id="1-4-分支构建配置"><a href="#1-4-分支构建配置" class="headerlink" title="1.4 分支构建配置"></a>1.4 分支构建配置</h3><blockquote>
+<p>根据 GitHub 仓库获取仓库分支,点击分支对应的构建配置</p>
+</blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sq9bl4vpj223u0ys43f.jpg"></p>
+<h3 id="1-5-构建配置"><a href="#1-5-构建配置" class="headerlink" title="1.5 构建配置"></a>1.5 构建配置</h3><blockquote>
+<ol>
+<li>App Center 会读取仓库的文件,让你选取你要构建的 Project&#x2F;Workspace 和相应 Shared Scheme;</li>
+<li>Xcode 版本;</li>
+<li>Build scripts 自定义构建脚本,脚本是包含在 git 仓库文件里,具体配置<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm1pY3Jvc29mdC5jb20vZW4tdXMvYXBwY2VudGVyL2J1aWxkL2N1c3RvbS9zY3JpcHRzLw==">见文档<i class="fa fa-external-link-alt"></i></span>;(可选配置)</li>
+<li>构建触发规则, push 触发构建&#x2F;手动触发;</li>
+<li>自动增加构建号,自动测试配置;(可选配置)</li>
+<li>环境变量设置,<span class="exturl" data-url="aHR0cHM6Ly9kb2NzLm1pY3Jvc29mdC5jb20vZW4tdXMvYXBwY2VudGVyL2J1aWxkL2N1c3RvbS92YXJpYWJsZXMv">见文档<i class="fa fa-external-link-alt"></i></span></li>
+<li>签名证书设置,证书导出这边不做过多介绍,可参考<span class="exturl" data-url="aHR0cHM6Ly93d3cuamlhbnNodS5jb20vcC85NmNlMTIwMWIzMmU=">链接<i class="fa fa-external-link-alt"></i></span>;</li>
+<li>真机测试,分发构建,构建状态图标;(可选配置)</li>
+</ol>
+</blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sqc4f8bbj223g2b4kaa.jpg"></p>
+<h3 id="1-6-分支构建历史"><a href="#1-6-分支构建历史" class="headerlink" title="1.6 分支构建历史"></a>1.6 分支构建历史</h3><p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sr1apnj3j221019ggsk.jpg"></p>
+<h3 id="1-7-构建产物"><a href="#1-7-构建产物" class="headerlink" title="1.7 构建产物"></a>1.7 构建产物</h3><blockquote>
+<p>构建完成后有 ipa 包等,可以通过 App Center 分发</p>
+</blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1g2sraxze93j221s1a2k4v.jpg"></p>
+<blockquote>
+<p>但是个人发现访问和下载速度上不是很快,所以通过 Post-build 脚本自己上传到蒲公英托管平台;</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env bash</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> [ <span class="string">&quot;<span class="variable">$AGENT_JOBSTATUS</span>&quot;</span> == <span class="string">&quot;Succeeded&quot;</span> ]; <span class="keyword">then</span></span><br><span class="line"></span><br><span class="line">ukey=蒲公英ukey</span><br><span class="line">apikey=蒲公英apikey</span><br><span class="line">desc=蒲公英上传描述</span><br><span class="line"></span><br><span class="line">curl -F <span class="string">&quot;file=@<span class="variable">$APPCENTER_OUTPUT_DIRECTORY</span>/<span class="variable">$APPCENTER_XCODE_SCHEME</span>.ipa&quot;</span> \</span><br><span class="line"> -F <span class="string">&quot;uKey=<span class="variable">$ukey</span>&quot;</span> -F <span class="string">&quot;_api_key=<span class="variable">$apikey</span>&quot;</span> \</span><br><span class="line">  -F <span class="string">&quot;updateDescription=<span class="variable">$desc</span>&quot;</span> https://qiniu-storage.pgyer.com/apiv1/app/upload</span><br><span class="line"></span><br><span class="line"><span class="keyword">fi</span></span><br></pre></td></tr></table></figure>
+
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1g2st0ejwiqj216s0o8adx.jpg"></p>
+<h2 id="2-总结"><a href="#2-总结" class="headerlink" title="2. 总结"></a>2. 总结</h2><p>App Center 里面提供了一系列的关于应用开发的 SDK 和服务,产品做得很全面,还提供了一些云的概念操作(线上打包);</p>
+<p>有时间可以多研究 App Center 的这一套东西,如果一个公司规模够大,产品丰富,也可以自己搭建一个自己像这样的一套系统;</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/02/22/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E5%BC%80%E5%8F%91%20Jenkins%20%E5%90%88%E5%B9%B6%E4%BB%A3%E7%A0%81%E6%8F%90%E4%BA%A4%E4%BD%93%E9%AA%8C%E7%89%88%E6%9C%AC/" rel="prev" title="微信小程序开发 Jenkins 合并代码提交体验版本">
+                  <i class="fa fa-angle-left"></i> 微信小程序开发 Jenkins 合并代码提交体验版本
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/06/03/App%20%E6%89%93%E5%8C%85%E6%9E%84%E5%BB%BA%E7%B3%BB%E7%BB%9F/" rel="next" title="App 打包构建系统">
+                  App 打包构建系统 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">FerryVip</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js","integrity":"sha256-9y71g5Lz/KLsHjB8uXwnkuWDtAMDSzD/HdIbqhJfTAI="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

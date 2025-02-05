@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"strawferry.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"show_result":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="pm2 node 服务器部署安装npm i -g pm2 启动服务基本的 pm2 start app.js 带参数 pm2 ENV&#x3D;production start app.js 从 .config.js 文件启动 pm2 start app.config.js123456789101112131415161718module.exports &#x3D; &amp;#123;  apps : [&amp;#123;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pm2 node 服务器部署">
+<meta property="og:url" content="https://strawferry.github.io/2017/03/12/pm2%20node%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/index.html">
+<meta property="og:site_name" content="FerryVip&#39;s Blog">
+<meta property="og:description" content="pm2 node 服务器部署安装npm i -g pm2 启动服务基本的 pm2 start app.js 带参数 pm2 ENV&#x3D;production start app.js 从 .config.js 文件启动 pm2 start app.config.js123456789101112131415161718module.exports &#x3D; &amp;#123;  apps : [&amp;#123;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-12T14:02:31.000Z">
+<meta property="article:modified_time" content="2023-08-20T01:56:56.000Z">
+<meta property="article:author" content="FerryVip">
+<meta property="article:tag" content="前端,分享,博客,前端开发,前端技术">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://strawferry.github.io/2017/03/12/pm2%20node%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://strawferry.github.io/2017/03/12/pm2%20node%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/","path":"2017/03/12/pm2 node 服务器部署/","title":"pm2 node 服务器部署"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>pm2 node 服务器部署 | FerryVip's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88853535-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-88853535-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kt6ijw4ygg");
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FerryVip's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术分享</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">40</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#pm2-node-%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2"><span class="nav-number">1.</span> <span class="nav-text">pm2 node 服务器部署</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%9C%8D%E5%8A%A1"><span class="nav-number">1.2.</span> <span class="nav-text">启动服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E-config-js-%E6%96%87%E4%BB%B6%E5%90%AF%E5%8A%A8-pm2-start-app-config-js"><span class="nav-number">1.3.</span> <span class="nav-text">从 .config.js 文件启动 pm2 start app.config.js</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E-json-%E6%96%87%E4%BB%B6%E5%90%AF%E5%8A%A8-pm2-start-app-json"><span class="nav-number">1.4.</span> <span class="nav-text">从 json 文件启动 pm2 start app.json</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E7%94%A8%E7%9A%84%E5%8F%82%E6%95%B0%E8%AF%A6%E6%83%85"><span class="nav-number">1.5.</span> <span class="nav-text">可用的参数详情</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FerryVip"
+      src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+  <p class="site-author-name" itemprop="name">FerryVip</p>
+  <div class="site-description" itemprop="description">好好过一生</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0cmF3ZmVycnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;strawferry"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly94aWFvaG9uZ3NodXNoYXJlLm9ubGluZQ==" title="Share工具 → https:&#x2F;&#x2F;xiaohongshushare.online"><i class="fa fa-link fa-fw"></i>Share工具</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://strawferry.github.io/2017/03/12/pm2%20node%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+      <meta itemprop="name" content="FerryVip">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FerryVip's Blog">
+      <meta itemprop="description" content="好好过一生">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="pm2 node 服务器部署 | FerryVip's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          pm2 node 服务器部署
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-03-12 22:02:31" itemprop="dateCreated datePublished" datetime="2017-03-12T22:02:31+08:00">2017-03-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-20 09:56:56" itemprop="dateModified" datetime="2023-08-20T09:56:56+08:00">2023-08-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="pm2-node-服务器部署"><a href="#pm2-node-服务器部署" class="headerlink" title="pm2 node 服务器部署"></a>pm2 node 服务器部署</h1><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><code>npm i -g pm2</code></p>
+<h2 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h2><p>基本的 <code>pm2 start app.js</code></p>
+<p>带参数 <code>pm2 ENV=production start app.js</code></p>
+<h2 id="从-config-js-文件启动-pm2-start-app-config-js"><a href="#从-config-js-文件启动-pm2-start-app-config-js" class="headerlink" title="从 .config.js 文件启动 pm2 start app.config.js"></a>从 .config.js 文件启动 <code>pm2 start app.config.js</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable language_">module</span>.<span class="property">exports</span> = &#123;</span><br><span class="line">  apps : [&#123;</span><br><span class="line">    name        : <span class="string">&quot;worker&quot;</span>,</span><br><span class="line">    script      : <span class="string">&quot;./worker.js&quot;</span>,</span><br><span class="line">    watch       : <span class="literal">true</span>,</span><br><span class="line">    <span class="attr">env</span>: &#123;</span><br><span class="line">      <span class="string">&quot;NODE_ENV&quot;</span>: <span class="string">&quot;development&quot;</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    env_production : &#123;</span><br><span class="line">       <span class="string">&quot;NODE_ENV&quot;</span>: <span class="string">&quot;production&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,&#123;</span><br><span class="line">    name       : <span class="string">&quot;api-app&quot;</span>,</span><br><span class="line">    script     : <span class="string">&quot;./api.js&quot;</span>,</span><br><span class="line">    instances  : <span class="number">4</span>,</span><br><span class="line">    exec_mode  : <span class="string">&quot;cluster&quot;</span></span><br><span class="line">  &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="从-json-文件启动-pm2-start-app-json"><a href="#从-json-文件启动-pm2-start-app-json" class="headerlink" title="从 json 文件启动 pm2 start app.json"></a>从 json 文件启动 <code>pm2 start app.json</code></h2><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;apps&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span></span><br><span class="line">      <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;lost100-dev&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;script&quot;</span><span class="punctuation">:</span> <span class="string">&quot;./scripts/server.js&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;watch&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;ignore_watch&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span> <span class="string">&quot;node_modules&quot;</span><span class="punctuation">,</span> <span class="string">&quot;files&quot;</span><span class="punctuation">,</span> <span class="string">&quot;public&quot;</span><span class="punctuation">,</span> <span class="string">&quot;logs&quot;</span><span class="punctuation">,</span> <span class="string">&quot;mongodb&quot;</span><span class="punctuation">,</span> <span class="string">&quot;build&quot;</span><span class="punctuation">,</span> <span class="string">&quot;.idea/&quot;</span><span class="punctuation">,</span> <span class="string">&quot;.git&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;max_memory_restart&quot;</span><span class="punctuation">:</span> <span class="string">&quot;150M&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;instances&quot;</span><span class="punctuation">:</span> <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;exec_mode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cluster&quot;</span><span class="punctuation">,</span></span><br><span class="line">      <span class="attr">&quot;env&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">        <span class="attr">&quot;NODE_ENV&quot;</span><span class="punctuation">:</span> <span class="string">&quot;dev&quot;</span><span class="punctuation">,</span></span><br><span class="line">        <span class="attr">&quot;PORT&quot;</span><span class="punctuation">:</span> <span class="number">5566</span></span><br><span class="line">      <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="可用的参数详情"><a href="#可用的参数详情" class="headerlink" title="可用的参数详情"></a>可用的参数详情</h2><p>General</p>
+<table>
+<thead>
+<tr>
+<th align="center">Field</th>
+<th align="center">Type</th>
+<th align="center">Example</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">name</td>
+<td align="center">(string)</td>
+<td align="center">“my-api”</td>
+<td align="center">application name (default to script filename without extension)</td>
+</tr>
+<tr>
+<td align="center">script</td>
+<td align="center">(string)</td>
+<td align="center">”.&#x2F;api&#x2F;app.js”</td>
+<td align="center">script path relative to pm2 start</td>
+</tr>
+<tr>
+<td align="center">cwd</td>
+<td align="center">(string)</td>
+<td align="center">“&#x2F;var&#x2F;www&#x2F;”</td>
+<td align="center">the directory from which your app will be launched</td>
+</tr>
+<tr>
+<td align="center">args</td>
+<td align="center">(string)</td>
+<td align="center">“-a 13 -b 12”</td>
+<td align="center">string containing all arguments passed via CLI to script</td>
+</tr>
+<tr>
+<td align="center">interpreter</td>
+<td align="center">(string)</td>
+<td align="center">“&#x2F;usr&#x2F;bin&#x2F;python”</td>
+<td align="center">interpreter absolute path (default to node)</td>
+</tr>
+<tr>
+<td align="center">interpreter_args</td>
+<td align="center">(string)</td>
+<td align="center">”–harmony”</td>
+<td align="center">option to pass to the interpreter</td>
+</tr>
+<tr>
+<td align="center">node_args</td>
+<td align="center">(string)</td>
+<td align="center"></td>
+<td align="center">alias to interpreter_args</td>
+</tr>
+</tbody></table>
+<p>Advanced features</p>
+<table>
+<thead>
+<tr>
+<th align="center">Field</th>
+<th align="center">Type</th>
+<th align="center">Example</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">instances</td>
+<td align="center">number</td>
+<td align="center">-1</td>
+<td align="center">number of app instance to be launched</td>
+</tr>
+<tr>
+<td align="center">exec_mode</td>
+<td align="center">string</td>
+<td align="center">“cluster”</td>
+<td align="center">mode to start your app, can be “cluster” or “fork”, default fork</td>
+</tr>
+<tr>
+<td align="center">watch</td>
+<td align="center">boolean or []</td>
+<td align="center">true</td>
+<td align="center">enable watch &amp; restart feature, if a file change in the folder or subfolder, your app will get reloaded</td>
+</tr>
+<tr>
+<td align="center">ignore_watch</td>
+<td align="center">list</td>
+<td align="center">[”[/\].&#x2F;”, “node_modules”]</td>
+<td align="center">list of regex to ignore some file or folder names by the watch feature</td>
+</tr>
+<tr>
+<td align="center">max_memory_restart</td>
+<td align="center">string</td>
+<td align="center">“150M”</td>
+<td align="center">your app will be restarted if it exceeds the amount of memory specified. human-friendly format : it can be “10M”, “100K”, “2G” and so on…</td>
+</tr>
+<tr>
+<td align="center">env</td>
+<td align="center">object</td>
+<td align="center">{“NODE_ENV”: “development”, “ID”: “42”}</td>
+<td align="center">env variables which will appear in your app</td>
+</tr>
+<tr>
+<td align="center">env_</td>
+<td align="center">object</td>
+<td align="center">{“NODE_ENV”: “production”, “ID”: “89”}</td>
+<td align="center">inject when doing pm2 restart app.yml –env</td>
+</tr>
+<tr>
+<td align="center">source_map_support</td>
+<td align="center">boolean</td>
+<td align="center">true</td>
+<td align="center">default to true, [enable&#x2F;disable source map file]</td>
+</tr>
+<tr>
+<td align="center">instance_var</td>
+<td align="center">string</td>
+<td align="center">“NODE_APP_INSTANCE”</td>
+<td align="center">see documentation</td>
+</tr>
+</tbody></table>
+<p>Log files</p>
+<table>
+<thead>
+<tr>
+<th align="center">Field</th>
+<th align="center">Type</th>
+<th align="center">Example</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">log_date_format</td>
+<td align="center">(string)</td>
+<td align="center">“YYYY-MM-DD HH:mm Z”</td>
+<td align="center">log date format (see log section)</td>
+</tr>
+<tr>
+<td align="center">error_file</td>
+<td align="center">(string)</td>
+<td align="center">error file path</td>
+<td align="center">(default to $HOME&#x2F;.pm2&#x2F;logs&#x2F;XXXerr.log)</td>
+</tr>
+<tr>
+<td align="center">out_file</td>
+<td align="center">(string)</td>
+<td align="center">output file path</td>
+<td align="center">(default to $HOME&#x2F;.pm2&#x2F;logs&#x2F;XXXout.log)</td>
+</tr>
+<tr>
+<td align="center">combine_logs</td>
+<td align="center">boolean</td>
+<td align="center">true</td>
+<td align="center">if set to true, avoid to suffix</td>
+</tr>
+<tr>
+<td align="center">merge_logs</td>
+<td align="center">boolean</td>
+<td align="center">true</td>
+<td align="center">alias to combine_logs</td>
+</tr>
+<tr>
+<td align="center">pid_file</td>
+<td align="center">(string)</td>
+<td align="center">pid file path</td>
+<td align="center">(default to $HOME&#x2F;.pm2&#x2F;pid&#x2F;app-pm_id.pid)</td>
+</tr>
+</tbody></table>
+<p>Control flow</p>
+<table>
+<thead>
+<tr>
+<th align="center">Field</th>
+<th align="center">Type</th>
+<th align="center">Example</th>
+<th align="center">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">min_uptime</td>
+<td align="center">(string)</td>
+<td align="center"></td>
+<td align="center">min uptime of the app to be considered started</td>
+</tr>
+<tr>
+<td align="center">listen_timeout</td>
+<td align="center">number</td>
+<td align="center">8000</td>
+<td align="center">time in ms before forcing a reload if app not listening</td>
+</tr>
+<tr>
+<td align="center">kill_timeout</td>
+<td align="center">number</td>
+<td align="center">1600</td>
+<td align="center">time in milliseconds before sending a final SIGKILL</td>
+</tr>
+<tr>
+<td align="center">wait_ready</td>
+<td align="center">boolean</td>
+<td align="center">false</td>
+<td align="center">Instead of reload waiting for listen event, wait for process.send(‘ready’)</td>
+</tr>
+<tr>
+<td align="center">max_restarts</td>
+<td align="center">number</td>
+<td align="center">10</td>
+<td align="center">number of consecutive unstable restarts (less than 1sec interval or custom time via min_uptime) before your app is considered errored and stop being restarted</td>
+</tr>
+<tr>
+<td align="center">restart_delay</td>
+<td align="center">number</td>
+<td align="center">4000</td>
+<td align="center">time to wait before restarting a crashed app (in milliseconds). defaults to 0.</td>
+</tr>
+<tr>
+<td align="center">autorestart</td>
+<td align="center">boolean</td>
+<td align="center">false</td>
+<td align="center">true by default. if false, PM2 will not restart your app if it crashes or ends peacefully</td>
+</tr>
+<tr>
+<td align="center">cron_restart</td>
+<td align="center">string</td>
+<td align="center">“1 0 * * *”</td>
+<td align="center">a cron pattern to restart your app. Application must be running for cron feature to work</td>
+</tr>
+<tr>
+<td align="center">vizion</td>
+<td align="center">boolean</td>
+<td align="center">false</td>
+<td align="center">true by default. if false, PM2 will start without vizion features (versioning control metadatas)</td>
+</tr>
+<tr>
+<td align="center">post_update</td>
+<td align="center">list</td>
+<td align="center">[“npm install”, “echo launching the app”]</td>
+<td align="center">a list of commands which will be executed after you perform a Pull&#x2F;Upgrade operation from Keymetrics dashboard</td>
+</tr>
+<tr>
+<td align="center">force</td>
+<td align="center">boolean</td>
+<td align="center">true</td>
+<td align="center">defaults to false. if true, you can start the same script several times which is usually not allowed by PM2</td>
+</tr>
+</tbody></table>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/02/22/hybrid-app-codepush/" rel="prev" title="混合app集成热更新">
+                  <i class="fa fa-angle-left"></i> 混合app集成热更新
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/04/16/%E5%88%A9%E7%94%A8%20Travis%20CL%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20hexo%20%E5%8D%9A%E5%AE%A2%E5%88%B0%20GitHub%20Pages%20%E4%B8%8A/" rel="next" title="利用 Travis CI 自动部署 hexo 博客到 GitHub Pages 上">
+                  利用 Travis CI 自动部署 hexo 博客到 GitHub Pages 上 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">FerryVip</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js","integrity":"sha256-9y71g5Lz/KLsHjB8uXwnkuWDtAMDSzD/HdIbqhJfTAI="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

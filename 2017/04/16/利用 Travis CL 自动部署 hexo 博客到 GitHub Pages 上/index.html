@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon.ico">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/themes/blue/pace-theme-center-atom.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.2.4/pace.min.js" integrity="sha256-gqd7YTjg/BtfqWSwsJOvndl0Bxc8gFImLEkXQT8+qj0=" crossorigin="anonymous"></script>
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"strawferry.github.io","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.18.0","exturl":true,"sidebar":{"position":"right","width":320,"display":"post","padding":18,"offset":12},"copycode":{"enable":true,"show_result":true,"style":"mac"},"fold":{"enable":true,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":true,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":true,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近一直在看一些关于持续集成的东西,持续集成会对整个项目的敏捷开发有很大的帮助; 了解过 jenkins, 功能非常强大,但是在做 iOS 持续集成必须在一台 Mac 系统下,后面通过了解和别人介绍,认识到了今天的主角 Travis CI; hexo虽然可以方便地部署github静态博客，但是仅仅是把最终生成的html保存在repository中，像原始的Markdown文件，hexo配置文件，主">
+<meta property="og:type" content="article">
+<meta property="og:title" content="利用 Travis CI 自动部署 hexo 博客到 GitHub Pages 上">
+<meta property="og:url" content="https://strawferry.github.io/2017/04/16/%E5%88%A9%E7%94%A8%20Travis%20CL%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20hexo%20%E5%8D%9A%E5%AE%A2%E5%88%B0%20GitHub%20Pages%20%E4%B8%8A/index.html">
+<meta property="og:site_name" content="FerryVip&#39;s Blog">
+<meta property="og:description" content="最近一直在看一些关于持续集成的东西,持续集成会对整个项目的敏捷开发有很大的帮助; 了解过 jenkins, 功能非常强大,但是在做 iOS 持续集成必须在一台 Mac 系统下,后面通过了解和别人介绍,认识到了今天的主角 Travis CI; hexo虽然可以方便地部署github静态博客，但是仅仅是把最终生成的html保存在repository中，像原始的Markdown文件，hexo配置文件，主">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feoojwv4fej20r20cpwje.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feoow4xyehj20ke0esad6.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feoow57epmj21nk1a4n60.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feoow4xvs2j20l60e0tci.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feoow4xzrej20l50aujvg.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feopcj6xuqj20ug0ctjv3.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feopcj4vwfj20d808fgmt.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feopcj8aw7j20v60ql7b3.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feouarcga0j20uy0sqn63.jpg">
+<meta property="og:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feouaresa4j20mx0s0k4r.jpg">
+<meta property="article:published_time" content="2017-04-16T09:26:34.000Z">
+<meta property="article:modified_time" content="2023-08-20T01:56:56.000Z">
+<meta property="article:author" content="FerryVip">
+<meta property="article:tag" content="前端,分享,博客,前端开发,前端技术">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ws1.sinaimg.cn/large/8bbf0afbly1feoojwv4fej20r20cpwje.jpg">
+
+
+<link rel="canonical" href="https://strawferry.github.io/2017/04/16/%E5%88%A9%E7%94%A8%20Travis%20CL%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20hexo%20%E5%8D%9A%E5%AE%A2%E5%88%B0%20GitHub%20Pages%20%E4%B8%8A/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://strawferry.github.io/2017/04/16/%E5%88%A9%E7%94%A8%20Travis%20CL%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20hexo%20%E5%8D%9A%E5%AE%A2%E5%88%B0%20GitHub%20Pages%20%E4%B8%8A/","path":"2017/04/16/利用 Travis CL 自动部署 hexo 博客到 GitHub Pages 上/","title":"利用 Travis CI 自动部署 hexo 博客到 GitHub Pages 上"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>利用 Travis CI 自动部署 hexo 博客到 GitHub Pages 上 | FerryVip's Blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-88853535-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-88853535-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+  <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "kt6ijw4ygg");
+  </script>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">FerryVip's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">技术分享</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档<span class="badge">40</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%80%9D%E8%B7%AF"><span class="nav-number">1.</span> <span class="nav-text">1. 思路</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%85%B7%E4%BD%93%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">2. 具体实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E9%A6%96%E5%85%88%E9%9C%80%E8%A6%81%E5%9C%A8-GitHub-%E4%B8%8A%E9%9D%A2%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E4%BB%93%E5%BA%93-%E6%88%96%E8%80%85%E5%B7%B2%E6%9C%89"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 首先需要在 GitHub 上面创建一个仓库(或者已有)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E7%94%9F%E6%88%90-Personal-Access-tokens"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 生成 Personal Access tokens</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-travis-ci-%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 travis-ci 设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4-hexo-%E5%8D%9A%E5%AE%A2%E8%AE%BE%E7%BD%AE"><span class="nav-number">2.4.</span> <span class="nav-text">2.4 hexo 博客设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-5-%E5%8F%91%E5%B8%83%E5%8D%9A%E5%AE%A2%E6%96%87%E7%AB%A0"><span class="nav-number">2.5.</span> <span class="nav-text">2.5 发布博客文章</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="FerryVip"
+      src="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+  <p class="site-author-name" itemprop="name">FerryVip</p>
+  <div class="site-description" itemprop="description">好好过一生</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly9naXRodWIuY29tL3N0cmF3ZmVycnk=" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;strawferry"><i class="fab fa-github fa-fw"></i>GitHub</span>
+      </span>
+      <span class="links-of-author-item">
+        <span class="exturl" data-url="aHR0cHM6Ly94aWFvaG9uZ3NodXNoYXJlLm9ubGluZQ==" title="Share工具 → https:&#x2F;&#x2F;xiaohongshushare.online"><i class="fa fa-link fa-fw"></i>Share工具</span>
+      </span>
+  </div>
+  <div class="cc-license animated" itemprop="license">
+    <span class="exturl cc-opacity" data-url="aHR0cHM6Ly9jcmVhdGl2ZWNvbW1vbnMub3JnL2xpY2Vuc2VzL2J5LW5jLXNhLzQuMC8="><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></span>
+  </div>
+
+        </div>
+      </div>
+        <div class="back-to-top animated" role="button" aria-label="返回顶部">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://strawferry.github.io/2017/04/16/%E5%88%A9%E7%94%A8%20Travis%20CL%20%E8%87%AA%E5%8A%A8%E9%83%A8%E7%BD%B2%20hexo%20%E5%8D%9A%E5%AE%A2%E5%88%B0%20GitHub%20Pages%20%E4%B8%8A/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="https://cdn.jsdelivr.net/gh/strawferry/GSS@master/uPic/2023-08-20/icon-11-57-fa4iZT.jpg">
+      <meta itemprop="name" content="FerryVip">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="FerryVip's Blog">
+      <meta itemprop="description" content="好好过一生">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="利用 Travis CI 自动部署 hexo 博客到 GitHub Pages 上 | FerryVip's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          利用 Travis CI 自动部署 hexo 博客到 GitHub Pages 上
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-04-16 17:26:34" itemprop="dateCreated datePublished" datetime="2017-04-16T17:26:34+08:00">2017-04-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-20 09:56:56" itemprop="dateModified" datetime="2023-08-20T09:56:56+08:00">2023-08-20</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>最近一直在看一些关于持续集成的东西,持续集成会对整个项目的敏捷开发有很大的帮助;</p>
+<p>了解过 jenkins, 功能非常强大,但是在做 iOS 持续集成必须在一台 Mac 系统下,后面通过了解和别人介绍,认识到了今天的主角 Travis CI;</p>
+<p>hexo虽然可以方便地部署github静态博客，但是仅仅是把最终生成的html保存在repository中，像原始的Markdown文件，hexo配置文件，主题配置文件，修改文件都仅仅是保存在本地。这样不利于保存，也无法查看每篇博客的修改历史。更重要的是无法做到跨平台，也不易于多人写作。</p>
+<p>想法是每次写博客，只需要push md文件及博客所需的资源文件即可。Travis CI持续集成tool可以满足此需求。</p>
+<p>Travis CI 目前主要是和 GitHub 一起使用,所以今天的例子就以 hexo 博客的每次 push 触发 Travis CI 自动部署到 GitHub 的 Pages 上;</p>
+<h2 id="1-思路"><a href="#1-思路" class="headerlink" title="1. 思路"></a>1. 思路</h2><blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1feoojwv4fej20r20cpwje.jpg"></p>
+</blockquote>
+<h2 id="2-具体实现"><a href="#2-具体实现" class="headerlink" title="2. 具体实现"></a>2. 具体实现</h2><h3 id="2-1-首先需要在-GitHub-上面创建一个仓库-或者已有"><a href="#2-1-首先需要在-GitHub-上面创建一个仓库-或者已有" class="headerlink" title="2.1 首先需要在 GitHub 上面创建一个仓库(或者已有)"></a>2.1 首先需要在 GitHub 上面创建一个仓库(或者已有)</h3><blockquote>
+<p>以新建仓库为例</p>
+</blockquote>
+<blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1feoow4xyehj20ke0esad6.jpg"></p>
+</blockquote>
+<h3 id="2-2-生成-Personal-Access-tokens"><a href="#2-2-生成-Personal-Access-tokens" class="headerlink" title="2.2 生成 Personal Access tokens"></a>2.2 生成 Personal Access tokens</h3><blockquote>
+<p>为后续的功能生成的 token</p>
+</blockquote>
+<p>登录github, settings -&gt; Personal access tokens -&gt; Generate new token</p>
+<blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1feoow57epmj21nk1a4n60.jpg"></p>
+</blockquote>
+<p>填写token description，比如叫 travis.并勾选上授予的权限，比如我勾选的是repo和gist，然后create.</p>
+<blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1feoow4xvs2j20l60e0tci.jpg"></p>
+</blockquote>
+<p>将产生的token串复制保留下来，后面会使用到,如果丢失，只能重新产生。</p>
+<blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1feoow4xzrej20l50aujvg.jpg"></p>
+</blockquote>
+<h3 id="2-3-travis-ci-设置"><a href="#2-3-travis-ci-设置" class="headerlink" title="2.3 travis-ci 设置"></a>2.3 <span class="exturl" data-url="aHR0cHM6Ly90cmF2aXMtY2kub3JnLw==">travis-ci 设置<i class="fa fa-external-link-alt"></i></span></h3><p>登录 travis-ci 网站,利用 GitHub 账号登录;</p>
+<p>同步 GitHub 仓库</p>
+<blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1feopcj6xuqj20ug0ctjv3.jpg"></p>
+</blockquote>
+<p>选取刚才创建的仓库并打开</p>
+<blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1feopcj4vwfj20d808fgmt.jpg"></p>
+</blockquote>
+<p>添加刚才的 token 作为全局变量</p>
+<blockquote>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1feopcj8aw7j20v60ql7b3.jpg"></p>
+</blockquote>
+<h3 id="2-4-hexo-博客设置"><a href="#2-4-hexo-博客设置" class="headerlink" title="2.4 hexo 博客设置"></a>2.4 <span class="exturl" data-url="aHR0cHM6Ly9oZXhvLmlvLw==">hexo 博客设置<i class="fa fa-external-link-alt"></i></span></h3><p>基本的 hexo 命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-cli -g</span><br><span class="line">hexo init blog</span><br><span class="line"><span class="built_in">cd</span> blog</span><br><span class="line">npm install</span><br><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+<p>进入 blog 所在的文件夹下，新建 <code>.travis.yml</code> 文件，并添加以下内容</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"># 使用语言</span><br><span class="line"><span class="attr">language</span>: node_js</span><br><span class="line"># node版本</span><br><span class="line"><span class="attr">node_js</span>: stable</span><br><span class="line"># 设置只监听哪个分支</span><br><span class="line"><span class="attr">branches</span>:</span><br><span class="line">  <span class="attr">only</span>:</span><br><span class="line">  - source</span><br><span class="line"># 缓存，可以节省集成的时间，这里我用了yarn，如果不用可以删除</span><br><span class="line"><span class="attr">cache</span>:</span><br><span class="line">  <span class="attr">apt</span>: <span class="literal">true</span></span><br><span class="line">  <span class="attr">yarn</span>: <span class="literal">true</span></span><br><span class="line">  <span class="attr">directories</span>:</span><br><span class="line">    - node_modules</span><br><span class="line"># tarvis生命周期执行顺序详见官网文档</span><br><span class="line"><span class="attr">before_install</span>:</span><br><span class="line">- git config --<span class="variable language_">global</span> user.<span class="property">name</span> <span class="string">&quot;name&quot;</span></span><br><span class="line">- git config --<span class="variable language_">global</span> user.<span class="property">email</span> <span class="string">&quot;mmail@mail.com&quot;</span></span><br><span class="line"># 由于使用了yarn，所以需要下载，如不用yarn这两行可以删除</span><br><span class="line">- curl -o- -L <span class="attr">https</span>:<span class="comment">//yarnpkg.com/install.sh | bash</span></span><br><span class="line">- <span class="keyword">export</span> <span class="variable constant_">PATH</span>=$HOME/.<span class="property">yarn</span>/<span class="attr">bin</span>:$PATH</span><br><span class="line">- npm install -g hexo-cli</span><br><span class="line"><span class="attr">install</span>:</span><br><span class="line"># 不用yarn的话这里改成 npm i 即可</span><br><span class="line">- yarn</span><br><span class="line"><span class="attr">script</span>:</span><br><span class="line">- hexo clean</span><br><span class="line">- hexo generate</span><br><span class="line"><span class="attr">after_success</span>:</span><br><span class="line">- cd ./public</span><br><span class="line">- git init</span><br><span class="line">- git add --all .</span><br><span class="line">- git commit -m <span class="string">&quot;Travis CI Auto Builder&quot;</span></span><br><span class="line"># 这里的 <span class="variable constant_">REPO_TOKEN</span> 即之前在 travis 项目的环境变量里添加的</span><br><span class="line">- git push --quiet --force <span class="attr">https</span>:<span class="comment">//$REPO_TOKEN@git@github.com/strawferry/FerryVipBlog.git master</span></span><br></pre></td></tr></table></figure>
+<p>然后，准备 push 该项目到 github ，如果是新项目可参照下面的git指令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line"><span class="comment"># 添加自己的项目</span></span><br><span class="line">git remote add origin git@github.com:strawferry/travis.git</span><br><span class="line"><span class="comment"># 新建并切换分支</span></span><br><span class="line">git checkout --orphan <span class="built_in">source</span></span><br><span class="line">git add -A</span><br><span class="line">git commit -m <span class="string">&quot;init repo&quot;</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
+<h3 id="2-5-发布博客文章"><a href="#2-5-发布博客文章" class="headerlink" title="2.5 发布博客文章"></a>2.5 发布博客文章</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">前往 <span class="built_in">source</span> 分支下:</span><br><span class="line">hexo new title   // 1. 新建文章;</span><br><span class="line">2. 使用 markdown 软件或者 vim 直接编写文章内容,并保存文件;</span><br><span class="line">3. 把目前分支的内容变化提交到 git 线上仓库;</span><br><span class="line">4. 接着就等待 travis-ci 自动部署到 pages 上;</span><br></pre></td></tr></table></figure>
+<p><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1feouarcga0j20uy0sqn63.jpg"><br><img data-src="https://ws1.sinaimg.cn/large/8bbf0afbly1feouaresa4j20mx0s0k4r.jpg"></p>
+<p>这样你的博客就已经成功部署到 pages 上面了</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>这个是一个简单的对 travis-ci 的入门,这样能够给我们提供不少的事,持续集成能够给开发带来极大的便利,让程序员不做一些重复的事情,提高效率;</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/12/pm2%20node%20%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E7%BD%B2/" rel="prev" title="pm2 node 服务器部署">
+                  <i class="fa fa-angle-left"></i> pm2 node 服务器部署
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/05/20/ReactNative%E4%BB%BF%E9%80%A0ofo%20%E5%85%B1%E4%BA%AB%E5%8D%95%E8%BD%A6%E5%BF%AB%E9%80%9F%E5%BC%80%E5%8F%91%E7%9A%84app/" rel="next" title="ReactNative 仿造 ofo 共享单车快速开发的app">
+                  ReactNative 仿造 ofo 共享单车快速开发的app <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 2016 – 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-star"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">FerryVip</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="reading-progress-bar"></div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lozad.js/1.16.0/lozad.min.js" integrity="sha256-mOFREFhqmHeQbXpK2lp4nA3qooVgACfh88fpJftLBbc=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+  <script class="next-config" data-name="pdf" type="application/json">{"object_url":{"url":"https://cdnjs.cloudflare.com/ajax/libs/pdfobject/2.2.12/pdfobject.min.js","integrity":"sha256-g2xji1rlE3KsGVClvuxTbcR0Kn2+wtQADSff2Tbb4zA="},"url":"/lib/pdf/web/viewer.html"}</script>
+  <script src="/js/third-party/tags/pdf.js"></script>
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.3.0/mermaid.min.js","integrity":"sha256-9y71g5Lz/KLsHjB8uXwnkuWDtAMDSzD/HdIbqhJfTAI="}}</script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+
+  <script src="/js/third-party/pace.js"></script>
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"all","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
